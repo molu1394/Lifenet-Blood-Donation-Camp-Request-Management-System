@@ -1,0 +1,41 @@
+{% extends "accounts/accounts_base.html" %}
+{% block content %}
+<div class="message-box">
+    {% if messages %}
+        {% for message in messages %}
+            {% if forloop.last %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+
+    {% if profile_form.errors %}
+        <div class="alert alert-danger">
+            {% for field, errors in profile_form.errors.items %}
+                {% for error in errors %}
+                    <strong>{{ field|capfirst }}:</strong> {{ error }}<br>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+<h2>Register as Admin</h2>
+
+<div class="conatiner">
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>{{ profile_form.first_name.label_tag }} {{ profile_form.first_name }}</p>
+    <p>{{ profile_form.last_name.label_tag }} {{ profile_form.last_name }}</p>
+    <p>{{ form.username.label_tag }} {{ form.username }}</p>
+    <p>{{ form.email.label_tag }} {{ form.email }}</p>
+    <p>{{ form.password1.label_tag }} {{form.password1}}</p>
+    <p>{{ form.password2.label_tag }} {{ form.password2 }}</p>
+    <button type="submit">Register</button>
+  </form>
+</div>
+
+<p>Already a Admin? <a href="{% url 'accounts:login' role='admin' %}">Login here</a></p>
+{% endblock %}

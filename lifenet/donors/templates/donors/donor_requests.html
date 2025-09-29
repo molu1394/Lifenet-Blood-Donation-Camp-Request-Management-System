@@ -1,0 +1,76 @@
+{% extends base_template %}
+{%load static%}
+{%block extra_css%}
+<link rel="stylesheet" href="{%static 'css/donor_requests.css' %}">
+<link rel="stylesheet" href="{%static 'css/message.css'%}">
+{%endblock%}
+
+{% block content %}
+<div class="messagesbox">
+  {% if messages %}
+  <div class="messages">
+    {% for message in messages|dictsortreversed:"level" %}
+    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+      <h1>{{ message }}</h1>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% if user.is_authenticated and user.role == "DONOR" %}
+<div class="container">
+  <div class="switch-buttons">
+      <a href="{% url 'donors:donor_requests' %}">Blood Requests</a>
+       <a href="{% url 'patients:request_list' %}" class="active">General Blood Requests</a>
+  </div>
+  <h2>Blood Requests for You</h2>
+
+  <table class="fancy-table">
+    <thead>
+      <tr>
+        <th>Patient</th>
+        <th>Blood Group</th>
+        <th>Status</th>
+        <th>Requested At</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for req in requests %}
+      <tr>
+        <td>{{ req.patient.username }}</td>
+        <td>{{ req.blood_group }}</td>
+        <td>{{ req.status|title }}</td>
+        <td>{{ req.created_at|date:"d M Y, H:i" }}</td>
+        <td>
+          {% if req.status == "pending" %}
+          <form method="post" action="{% url 'donors:donor_request_action' req.id 'accept' %}">
+            {% csrf_token %}
+            <button type="submit" class="accept">Accept</button>
+          </form>
+          <form method="post" action="{% url 'donors:donor_request_action' req.id 'decline' %}">
+            {% csrf_token %}
+            <button type="submit" class="decline">Decline</button>
+          </form>
+          {% else %}
+          {{ req.status|title }}
+          {% endif %}
+        </td>
+      </tr>
+      {%empty%}
+      <tr>
+        <td colspan="6" class="text-center">No requests yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+{%else%}
+<div class="container mt-5 text-center">
+  <h1 class="text-danger">⚠️ Login as DONOR</h1>
+</div>
+{%endif%}
+
+{% endblock %}

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeNet</title>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" style="height:50px,width:auto;">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{%static 'css/homepage.css' %}">
+    <link rel="stylesheet" href="{%static 'css/message.css'%}">
+    {%block extra_css%}{%endblock%}
+</head>
+
+<body>
+    <div class="messagesbox">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages|dictsortreversed:"level" %}
+                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        
+        {% if form.errors %}
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    {% if forloop.last and forloop.parentloop.last %}
+                        <div class="alert alert-danger">
+                            <strong>{{ field|capfirst }}:</strong> {{ error }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
+        <div class="container">
+            <!-- Brand -->
+            <a class="navbar-brand" href="{% url 'homepage' %}">LifeNet</a>
+
+            <!-- Toggler -->
+            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars" id="toggleSidebar"></i>
+            </button>
+
+            <!-- Links -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#"><span id="nav-text">Donate</span></a>
+                        <ul class="dropdown-menu">
+                            {% if user.is_authenticated and user.role == "DONOR" %}
+                                <li><a class="dropdown-item" href="{% url 'donors:donor-dashboard' %}">Donor Dashboard</a>
+                                </li>
+                                <li><a class="dropdown-item" href="{% url 'camp:donor_upcoming_camp' %}">Blood Donation
+                                    Camp</a></li>
+                                <li><a class="dropdown-item" href="{% url 'patients:request_list'%}">Blood Request</span></a></li>
+                            {%else%}
+                                <li><a class="dropdown-item" href="{% url 'accounts:login' role='donor' %}">Donor Login</a>
+                                </li>
+                                <li><a class="dropdown-item" href="{% url 'camp:public_upcoming_camps' %}">Blood Donation
+                                    Camp</a></li>
+                                <li><a class="dropdown-item" href="{% url 'patients:request_list'%}">Blood Request</span></a></li>
+                            {%endif%}
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#"><span id="nav-text">Looking for Blood</span></a>
+                        <ul class="dropdown-menu">
+                            {% if user.is_authenticated and user.role == "PATIENT" %}
+                                <li><a class="dropdown-item" href="{% url 'patients:search-bloodbanks'%}">Blood
+                                        Availability</a></li>
+                                <li><a class="dropdown-item" href="{% url 'patients:patient-dashboard' %}">Patient
+                                        Dashboard</a></li>
+                            {%else%}
+                                <li><a class="dropdown-item" href="{% url 'patients:public_bloodbank_search'%}">Blood
+                                        Availability</a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounts:login' role='patient' %}">Patient
+                                        Login</a></li>
+                            {%endif%}     
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#"><span id="nav-text">BloodBank</span></a>
+                        <ul class="dropdown-menu">
+                            {% if user.is_authenticated %}
+                                {% if user.role == "BLOODBANK" %}
+                                    <li><a class="dropdown-item" href="{% url 'bloodbanks:bloodbank_dashboard' %}">Bloodbank Dashboard</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'accounts:login' role='staff' %}">Staff Login</a></li>
+                                {% elif user.role == "STAFF" %}
+                                    <li><a class="dropdown-item" href="{% url 'accounts:login' role='bloodbank' %}">Bloodbank Login</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'bloodbanks:staff_dashboard' %}">Staff Dashboard</a></li>
+                                {% else %}
+                                    <li><a class="dropdown-item" href="{% url 'accounts:login' role='bloodbank' %}">Bloodbank Login</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'accounts:login' role='staff' %}">Staff Login</a></li>
+                                {% endif %}
+                            {% else %}
+                                <li><a class="dropdown-item" href="{% url 'accounts:login' role='bloodbank' %}">Bloodbank Login</a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounts:login' role='staff' %}">Staff Login</a></li>
+                            {% endif %}
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#"><span id="nav-text">Host a Blood Drive</span></a>
+                        <ul class="dropdown-menu">
+                            {% if user.is_authenticated and user.role == "ORG" %}
+                                <li><a class="dropdown-item" href="{% url 'organizations:organizations-dashboard' %}">Organizations Dashboard</a></li>
+                            {%else%}
+                                <li><a class="dropdown-item" href="{% url 'accounts:login' role='org' %}">Organizations Login</a></li>
+                            {%endif%}
+                            
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        {% if user.is_authenticated and user.role == "ADMIN" %}
+                            <a class="nav-link" href="{% url 'core:admin-dashboard'%}"><span id="nav-text">Admin</span></a>
+                        {%else%}
+                            <a class="nav-link" href="{% url 'accounts:login' role='admin' %}"><span id="nav-text">Admin</span></a>
+                        {%endif%}
+                        
+                    </li>
+                    
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'accounts:logout' %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link nav-link fs-5 text-light"><span id="nav-text">Logout</span></button>
+                        </form>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        {% block content %}
+        <section class="hero">
+            <div class="container">
+                <h1>Saving Lives, One Connection at a Time</h1>
+                <p>LifeNet connects donors & patients</p>
+                <a href={%url 'homepage' %} class="btn btn-premium btn-lg mt-3">
+                    Join Us Today <i class="fa-solid fa-circle-arrow-right"></i>
+                </a>
+            </div>
+        </section>
+
+        <section class="py-5 bg-light">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold text-dark">How Can We Help You?</h2>
+                    <p class="text-muted">Explore the different ways you can contribute to our life-saving mission.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="feature-card" tabindex="0" role="article" aria-label="Make an Appointment">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <h5>Make an Appointment</h5>
+                            <p>Schedule your blood donation at a nearby center and become a hero today.</p>
+                            {% if user.is_authenticated and user.role == "DONOR" %}
+                                <a class="card-button" href="{% url 'camp:donor_upcoming_camp' %}">Schedule Now</a>
+                            {%else%}
+                                <a href="{% url 'accounts:login' role='donor' %}" class="card-button">Schedule Now</a>
+                            {%endif%}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card" tabindex="0" role="article" aria-label="Request Blood">
+                            <i class="fa-solid fa-flask"></i>
+                            <h5>Request Blood</h5>
+                            <p>If you or someone you know needs blood, submit a request instantly to find a donor.</p>
+                            {% if user.is_authenticated and user.role == "PATIENT" %}
+                                <a  href="{% url 'patients:search-bloodbanks'%}" class="card-button">Request Now</a>  
+                            {%else%}
+                                <a href="{% url 'accounts:login' role='patient' %}" class="card-button">Request Now</a>
+                            {%endif%}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card" tabindex="0" role="article" aria-label="Organize a Drive">
+                            <i class="fa-solid fa-handshake"></i>
+                            <h5>Organize a Drive</h5>
+                            <p>Help us collect life-saving blood by hosting a donation drive at your location.</p>
+                            {% if user.is_authenticated and user.role == "ORG" %}
+                                <a href="{% url 'organizations:organizations-dashboard' %}" class="card-button">Organize Now</a>
+                            {%else%}
+                                <a href="{% url 'accounts:login' role='org' %}" class="card-button">Organize Now</a>
+                            {%endif%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="facts-section">
+                    <!-- Left Box -->
+                    <div class="fact-box">
+                        <h2>Facts About Blood Needs</h2>
+                        <div class="content">
+                            <div class="left">
+                                <img src="{%static 'images/icon-blood-bag-purple.png'%}" alt="Blood Need Icon">
+                            </div>
+                            <div class="right">
+                                <p>Every 2 seconds someone in India needs blood.</p>
+                                <p>India requires approximately 14 million units of blood annually.</p>
+                                <p>On average, only about 11 million units are collected every year.</p>
+                                <p>Nearly 25% of road accident victims in India require blood transfusion.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Box -->
+                    <div class="fact-box">
+                        <h2>What Happens to Donated Blood?</h2>
+                        <div class="content">
+                            <div class="left">
+                                <img src="{%static 'images/icon-patient-purple.png'%}" alt="Donated Blood Icon">
+                            </div>
+
+                            <div class="right">
+                                <p>Have you ever wondered exactly what happens to the blood you donate? Your blood goes
+                                    on
+                                    an
+                                    amazing journey!</p>
+                                <p>You can learn about all the steps your blood goes through before it reaches a
+                                    recipient
+                                    in this
+                                    informative process.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <section class="image-cards-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <div class="image-container d-flex justify-content-center">
+                            <img src="{%static 'images/donor-purple-circle.png' %}" alt="Woman donating blood"
+                                class="main-image img-fluid">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <a href="{% url 'accounts:login' role='donor' %}" class="card-list-item">
+                            <div class="icon-wrapper">
+                                <i class="fa-solid fa-hand-holding-droplet"></i>
+                            </div>
+                            <div>
+                                <h5>Donate Blood</h5>
+                                <p>Your selfless act can save a life. Find nearby donation centers in Ahmedabad.</p>
+                            </div>
+                        </a>
+                        <a href="#" class="card-list-item">
+                            <div class="icon-wrapper">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </div>
+                            <div>
+                                <h5>Search For Blood</h5>
+                                <p>Quickly find available blood units in various blood banks across Ahmedabad and
+                                    Gujarat.
+                                </p>
+                            </div>
+                        </a>
+                        <a href="#" class="card-list-item">
+                            <div class="icon-wrapper">
+                                <i class="fa-solid fa-campground"></i>
+                            </div>
+                            <div>
+                                <h5>Organize a Blood Drive</h5>
+                                <p>Host a blood donation camp in your community or organization in Gujarat.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="maincontainer">
+                <div class="contactus-card">
+                    <div class="signup-header">
+                        <i class="fa fa-envelope "></i>
+                        <h2>Contact Us</h2>
+                    </div>
+                    <form method="post" enctype="multipart/form-data" id="contactForm">
+                        {% csrf_token %}
+                        <div class="row g-2">
+                            <div class="col-6 mb-3">
+                                <label for="id_firstname" class="form-label">First Name</label>
+                                {{ form.firstname }}
+                                <div class="text-danger small">{{ form.firstname.errors }}</div>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="id_lastname" class="form-label">Last Name</label>
+                                {{ form.lastname }}
+                                <div class="text-danger small">{{ form.lastname.errors }}</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">Email</label>
+                            {{ form.email }}
+                            <div class="text-danger small">{{ form.email.errors }}</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_subject" class="form-label">Subject</label>
+                            {{ form.subject }}
+                            <div class="text-danger small">{{ form.subject.errors }}</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_message" class="form-label">Message</label>
+                            {{ form.message }}
+                            <div class="text-danger small">{{ form.message.errors }}</div>
+                        </div>
+                        <button type="submit" class="btn btn-danger w-100">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        
+        {% endblock %}
+    </div>
+
+    <footer class="pt-4 pb-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <h5>About LifeNet</h5>
+                        <p>Connecting donors & patients through advanced AI and location tracking technology.</p>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <h5>Contact Us</h5>
+                        <p><i class="fa-solid fa-location-dot"></i> 123 Health Street, Ahmedabad, India</p>
+                        <p><i class="fa-solid fa-phone"></i> +91 ********777</p>
+                        <p><i class="fa-solid fa-phone"></i> contact@lifenet.com</p>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <h5>Follow Us</h5>
+                        <a href="#" class="d-block"><i class="fa-brands fa-facebook"></i> Facebook</a>
+                        <a href="#" class="d-block"><i class="fa-brands fa-x-twitter"></i> Twitter</a>
+                        <a href="#" class="d-block"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                    </div>
+                </div>
+                <hr class="bg-light" />
+                <p class="text-center mb-0">&copy; 2025 LifeNet. All Rights Reserved.</p>
+            </div>
+        </footer>
+
+
+
+    <!-- Auth UI Script -->
+    <script src="{%static 'js/homepage.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+</body>
+
+</html>

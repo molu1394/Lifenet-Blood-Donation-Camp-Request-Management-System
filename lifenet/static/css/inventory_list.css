@@ -1,0 +1,117 @@
+/* ==========================
+   Heading
+========================== */
+h2 {
+    font-weight: 800;
+    color: #b30000;
+    margin-bottom: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    position: relative;
+    animation: fadeInDown 1s ease-in-out;
+}
+h2::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #b30000, #ff4d4d);
+    margin: 12px auto 0;
+    border-radius: 3px;
+    animation: scaleIn 1s ease-in-out;
+}
+
+/* ==========================
+   Fancy Table
+========================== */
+.table {
+    width: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 1s ease-in-out;
+    border-collapse: collapse;
+}
+.table:hover {
+    transform: scale(1.01);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+/* Table Header */
+.table th {
+    background: linear-gradient(270deg, #b30000, #ff4d4d, #b30000);
+    background-size: 300% 300%;
+    animation: gradientMove 6s infinite linear;
+    color: #fff;
+    font-size: 18px;
+    padding: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+/* Table Rows */
+.table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #222;
+    border-top: 1px solid rgba(255, 200, 200, 0.4);
+    transition: all 0.3s ease;
+}
+.table tr:hover td {
+    background: rgba(255, 230, 230, 0.6);
+    box-shadow: inset 0 0 12px rgba(255, 77, 77, 0.35);
+    transform: scale(1.01);
+}
+
+/* ==========================
+   Update Button
+========================== */
+a.btn-primary {
+    display: inline-block;
+    margin-top: 20px;
+    background: linear-gradient(135deg, #06d6a0, #1b9aaa);
+    color: #fff;
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+a.btn-primary:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+a.btn-primary:active {
+    transform: scale(0.95);
+}
+
+/* ==========================
+   Animations
+========================== */
+@keyframes fadeInDown {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+@keyframes fadeInUp {
+  from {opacity: 0; transform: translateY(30px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+@keyframes scaleIn {
+  from {transform: scaleX(0);}
+  to {transform: scaleX(1);}
+}
+@keyframes gradientMove {
+  0% {background-position: 0% 50%;}
+  100% {background-position: 100% 50%;}
+}

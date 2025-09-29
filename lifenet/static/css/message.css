@@ -1,0 +1,76 @@
+/* Container for all messages */
+.messagesbox {
+    position: fixed;       /* Stays on top */
+    top: 20px;
+    right: 20px;
+    width: 320px;
+    z-index: 9999;         /* Always on top of other elements */
+    display: flex;
+    flex-direction: column-reverse; /* newest message on top */
+    gap: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Each message alert */
+.alert {
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    animation: fadeIn 0.5s ease-in-out, fadeOut 0.5s ease-in-out 5s forwards; /* auto-dismiss */
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.3s ease;
+}
+
+/* Hover effect */
+.alert:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+}
+
+/* Success messages */
+.alert-success {
+    background-color: #28a745;
+    border-left: 5px solid #1e7e34;
+}
+
+/* Error / Danger messages */
+.alert-danger, .alert-error {
+    background-color: #b71c1c;  /* Darker red */
+    border-left: 5px solid #7f0000; /* Darker left accent */
+    color: #fff; /* Ensure text is readable */
+}
+
+/* Info messages */
+.alert-info {
+    background-color: #17a2b8;
+    border-left: 5px solid #117a8b;
+}
+
+/* Warning messages */
+.alert-warning {
+    background-color: #ffc107;
+    color: #212529;
+    border-left: 5px solid #d39e00;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Fade-out / auto-dismiss animation */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}
+
+/* Optional: make message text consistent */
+.alert h1, .alert span {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}

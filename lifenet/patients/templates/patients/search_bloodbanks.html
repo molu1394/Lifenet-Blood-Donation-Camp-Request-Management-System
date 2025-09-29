@@ -1,0 +1,78 @@
+{% extends base_template %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/bloodrequest.css' %}">
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated and user.role == 'PATIENT' %}
+<div class="request-page">
+    <!-- 🔀 Switch buttons -->
+    <div class="switch-buttons">
+        <a href="{% url 'patients:search-donors' %}" class="btn btn-outline-danger">Search Donors</a>
+        <a href="{% url 'patients:search-bloodbanks' %}" class="btn btn-danger active">Search Blood Banks</a>
+    </div>
+
+    <h2>Available Blood Banks</h2>
+
+    <!-- 🔍 Search Form -->
+    <form method="get" class="form-inline mb-3">
+        {{ form.location }}
+        {{ form.blood_group }}
+        <button type="submit">Search</button>
+    </form>
+
+
+    <!-- 📋 Blood Banks Table -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Blood Bank Name</th>
+                <th>Address</th>
+                <th>Contact</th>
+                <th>Available Units</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bloodbank in bloodbanks %}
+            <tr>
+                <td>{{ bloodbank.bloodbank_name }}</td>
+                <td>{{ bloodbank.address }}</td>
+                <td>{{ bloodbank.mobile_number }}</td>
+                <td>
+                    {% with searched_group=request.session.searched_blood_group %}
+                    {% for inv in bloodbank.inventory.all %}
+                    {% if inv.blood_group == searched_group %}
+                    {{ inv.units_available }}
+                    {% endif %}
+                    {% endfor %}
+                    {% endwith %}
+                </td>
+                <td>
+                    <form method="post" action="{% url 'patients:send-request' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="bloodbank_id" value="{{ bloodbank.id }}">
+                        <input type="hidden" name="blood_group" value="{{ request.session.searched_blood_group }}">
+                        <button type="submit">Request</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No blood banks found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% else %}
+<div class="container mt-5 text-center">
+    <h1 class="text-danger">⚠️ Login as Patient</h1>
+</div>
+{% endif %}
+
+
+{% endblock %}

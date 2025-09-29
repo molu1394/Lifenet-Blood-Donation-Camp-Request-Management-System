@@ -1,0 +1,161 @@
+/* ==========================
+   Donors Page Scoped Styles
+========================== */
+.request-page h2 {
+    font-weight: 800;
+    color: #b30000;
+    margin-bottom: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    position: relative;
+    animation: fadeInDown 1s ease-in-out;
+}
+.request-page h2::after {
+    content: "";
+    display: block;
+    width: 90px;
+    height: 4px;
+    background: linear-gradient(90deg, #b30000, #ff4d4d);
+    margin: 12px auto 0;
+    border-radius: 3px;
+    animation: scaleIn 1s ease-in-out;
+}
+
+/* ==========================
+   Search Form
+========================== */
+.request-page form {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease;
+}
+
+.request-page form input[type="text"],
+.request-page form select {
+    padding: 10px 14px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+    min-width: 200px;
+}
+
+.request-page form input:focus,
+.request-page form select:focus {
+    border-color: #b30000;
+    box-shadow: 0 0 8px rgba(179, 0, 0, 0.3);
+}
+
+.request-page form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #b30000, #ff4d4d);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.request-page form button:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* ==========================
+   Donors Table
+========================== */
+.request-page .table {
+    width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.request-page .table th {
+    background: linear-gradient(270deg, #b30000, #ff4d4d, #b30000);
+    background-size: 300% 300%;
+    animation: gradientMove 5s infinite linear;
+    color: #fff;
+    font-size: 1.3rem;
+    padding: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    text-align: center;
+}
+
+.request-page .table td {
+    text-align: center;
+    padding: 14px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border-top: 1px solid rgba(200, 0, 0, 0.2);
+    transition: 0.3s;
+}
+.request-page .table tr:hover td {
+    background: rgba(255, 230, 230, 0.7);
+    transform: scale(1.01);
+}
+
+/* ==========================
+   Blood Group Badges
+========================== */
+.request-page .table td:nth-child(4) {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.request-page .table td:nth-child(4)::before {
+    content: "🩸 ";
+}
+.request-page .table td:nth-child(4) {
+    color: #b30000;
+}
+
+/* ==========================
+   Empty State
+========================== */
+.request-page .table td[colspan="5"] {
+    font-style: italic;
+    color: #777;
+    padding: 18px;
+    background: #fafafa;
+}
+
+/* ==========================
+   Switch Buttons
+========================== */
+.request-page .switch-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.request-page .switch-buttons a {
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    background-color: #b30000;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.request-page .switch-buttons a:hover {
+    background-color: #8B0000;
+    box-shadow: 0 0 8px #FFD700;
+}
+
+.request-page .switch-buttons a.active {
+    background-color: #FFD700;
+    color: #b30000;
+    box-shadow: 0 0 8px #b30000;
+}

@@ -1,0 +1,86 @@
+{% extends 'bloodbanks/staff_base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{%static 'css/staffdashboard.css' %}">
+<link rel="stylesheet" href="{%static 'css/message.css'%}">
+{% endblock %}
+
+
+{% block content %}
+<div class="messagesbox">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages|dictsortreversed:"level" %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    <h1>{{ message }}</h1>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% if user.is_authenticated and user.role == 'STAFF' %}
+<div class="container mt-5">
+    <h2 class="dashboard-title">Welcome, {{ user.first_name|default:user.username }}</h2>
+
+    <hr class="hr-gold">
+    
+    <!-- Big Dashboard Cards -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-4">
+            <div class="dashboard-card">
+                <i class="fas fa-users text-primary"></i>
+                <h5>Manage Donors</h5>
+                <p>View and verify registered donors</p>
+                <a href="{% url 'bloodbanks:donor_list' %}" class="btn btn-outline-primary">Open</a>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="dashboard-card">
+                <i class="fas fa-vials text-danger"></i>
+                <h5>Blood Inventory</h5>
+                <p>Monitor and update blood stock levels</p>
+                <a href="{% url 'inventory:inventory_list' %}" class="btn btn-outline-danger">View</a>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="dashboard-card">
+                <i class="fas fa-calendar-plus text-primary"></i>
+                <h5>Create Camps</h5>
+                <p>Organize and manage blood donation camps</p>
+                <a href="{% url 'camp:organizer_camp_list' %}" class="btn btn-outline-success">Manage</a>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="dashboard-card">
+                <i class="fas fa-file-medical text-warning"></i>
+                <h5>Requests</h5>
+                <p>Review and respond to blood requests</p>
+                <a href="{% url 'bloodbanks:patients_requests' %}" class="btn btn-outline-warning">Check</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+            <div class="col-md-6 mb-4">
+                <div class="dashboard-card">
+                    <i class="fas fa-user-circle text-dark"></i>
+                    <h5>View Profile</h5>
+                    <p>Manage and update your staff profile</p>
+                    <a href="{% url 'accounts:profile' %}" class="btn btn-outline-dark">Open</a>
+                </div>
+            </div>
+        </div>
+
+
+</div>
+{% else %}
+<div class="container mt-5 text-center">
+    <h1 class="text-danger">⚠️ Login as Staff</h1>
+    <a href="{% url 'accounts:login' %}" class="btn btn-primary mt-3">Go to Login</a>
+</div>
+{% endif %}
+{% endblock %}

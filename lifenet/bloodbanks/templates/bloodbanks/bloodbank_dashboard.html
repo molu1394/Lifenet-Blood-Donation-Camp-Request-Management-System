@@ -1,0 +1,96 @@
+{% extends base_template %}
+{%load static%}
+{% block extra_css %}
+<link rel="stylesheet" href="{%static 'css/bbdashboard.css'%}">
+<link rel="stylesheet" href="{%static 'css/message.css'%}">
+{% endblock %}
+
+{% block content %}
+<div class="messagesbox">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages|dictsortreversed:"level" %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    <h1>{{ message }}</h1>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% if user.is_authenticated and user.role == 'BLOODBANK' %}
+<div class="container mt-5" id="body">
+    <h1 class="dashboard-title">BloodBank Dashboard</h1>
+    <h2 class="text-center mb-5">Welcome, {{ user.username }}</h2>
+
+    <hr class="hr-gold">
+    
+    <div class="row">
+        <!-- Approve Staff -->
+        <div class="col-md-4 mb-4">
+            <div class="dashboard-card">
+                <i class="fas fa-user-check text-success"></i>
+                <h5>Approve Staff</h5>
+                <p>Review and approve staff registrations</p>
+                <a href="{% url 'bloodbanks:staff-approval-list' %}" class="btn btn-outline-success">Manage</a>
+            </div>
+        </div>
+
+        <!-- Stock Check -->
+        <div class="col-md-4 mb-4">
+            <div class="dashboard-card">
+                <i class="fas fa-vials text-danger"></i>
+                <h5>Stock Check</h5>
+                <p>Monitor available blood stock</p>
+                <a href="{% url 'inventory:inventory_list' %}" class="btn btn-outline-danger">Check</a>
+            </div>
+        </div>
+
+        <!-- Create Camp -->
+        <div class="col-md-4 mb-4">
+            <div class="dashboard-card">
+                <i class="fas fa-calendar-plus text-primary"></i>
+                <h5>Create Camp</h5>
+                <p>Organize new blood donation camps</p>
+                <a href="{% url 'camp:organizer_camp_list' %}" class="btn btn-outline-primary">Create</a>
+            </div>
+        </div>
+
+        <!-- Patients Requests -->
+        <div class="col-md-4 mb-4">
+            <div class="dashboard-card">
+                <i class="fas fa-file-medical text-warning"></i>
+                <h5>Patients Requests</h5>
+                <p>Manage and approve patient blood requests</p>
+                <a href="{% url 'bloodbanks:patients_requests' %}" class="btn btn-outline-warning">View</a>
+            </div>
+        </div>
+
+        <!-- Available Donors -->
+        <div class="col-md-4 mb-4">
+            <div class="dashboard-card">
+                <i class="fas fa-hand-holding-medical text-info"></i>
+                <h5>Available Donors</h5>
+                <p>Check donor availability and details</p>
+                <a href="{% url 'bloodbanks:donor_list' %}" class="btn btn-outline-info">Check</a>
+            </div>
+        </div>
+
+        <!-- View Profile -->
+        <div class="col-md-4 mb-4">
+            <div class="dashboard-card">
+                <i class="fas fa-user-circle text-dark"></i>
+                <h5>View Profile</h5>
+                <p>Manage and update your bloodbank profile</p>
+                <a href="{% url 'accounts:profile' %}" class="btn btn-outline-dark">Open</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="container mt-5 text-center">
+    <h1 class="text-danger">⚠️ Login as BloodBank</h1>
+</div>
+{% endif %}
+
+{% endblock %}
+

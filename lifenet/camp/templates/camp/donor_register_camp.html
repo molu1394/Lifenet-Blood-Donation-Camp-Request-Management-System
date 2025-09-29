@@ -1,0 +1,35 @@
+{% extends base_template %}
+
+
+{% block content %}
+{% if user.is_authenticated and user.role == "DONOR" %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Register for {{ camp.name }}</h1>
+
+        <form method="post" class="card p-4 shadow-sm">
+            {% csrf_token %}
+            
+            <!-- Slot selection -->
+            <div class="mb-3">
+                <label for="id_slot" class="form-label">Select Slot</label>
+                {{ form.slot }}
+                {% if form.slot.errors %}
+                    <div class="text-danger small">
+                        {{ form.slot.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'camp:donor_registered_camp' %}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-success">Register</button>
+            </div>
+        </form>
+    </div>
+{%else%}
+    <div class="container mt-5 text-center">
+            <h1 class="text-danger">⚠️ Login as DONOR</h1>
+    </div>
+{%endif%}
+{% endblock %}

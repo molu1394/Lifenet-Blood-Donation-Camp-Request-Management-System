@@ -1,0 +1,275 @@
+h2 {
+    font-weight: 800;
+    color: #b30000;
+    margin-bottom: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    position: relative;
+    animation: fadeInDown 1s ease-in-out;
+}
+h2::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #b30000, #ff4d4d);
+    margin: 12px auto 0;
+    border-radius: 3px;
+    animation: scaleIn 1s ease-in-out;
+}
+.switch-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.switch-buttons a {
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    background-color: #b30000;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.switch-buttons a:hover {
+    background-color: #8B0000;
+    box-shadow: 0 0 8px #FFD700;
+}
+
+.switch-buttons a.active {
+    background-color: #FFD700;
+    color: #b30000;
+    box-shadow: 0 0 8px #b30000;
+}
+/* Fancy Table */
+.fancy-table {
+    width:100%;
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 1s ease-in-out;
+}
+.fancy-table:hover {
+    transform: scale(1.01);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+/* Table Header */
+.fancy-table thead {
+    background: linear-gradient(270deg, #b30000, #ff4d4d, #b30000);
+    background-size: 300% 300%;
+    animation: gradientMove 6s infinite linear;
+    color: #fff;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+.fancy-table thead th {
+    border: none !important;
+    padding: 16px;
+    text-align: center;
+}
+
+/* Table Rows */
+.fancy-table tbody tr {
+    transition: all 0.4s ease;
+}
+.fancy-table tbody tr:hover {
+    background: rgba(255, 230, 230, 0.6) !important;
+    box-shadow: inset 0 0 12px rgba(255, 77, 77, 0.35);
+    transform: scale(1.01);
+}
+.fancy-table tbody td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 15px;
+    font-size: 1.2rem;
+    color: black;
+    border-top: 1px solid rgba(255, 200, 200, 0.4);
+}
+
+/* Buttons */
+form {
+    display: inline-block;
+    margin: 3px;
+}
+td form button {
+    border: none;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+td form button:hover {
+    transform: translateY(-2px) scale(1.07);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+}
+td form button:active {
+    transform: scale(0.95);
+}
+
+/* Accept Button */
+td form button.accept {
+    background: linear-gradient(135deg, #28a745, #4cd964);
+    color: #fff;
+}
+td form button.accept:hover {
+    background: linear-gradient(135deg, #34c759, #5ef38c);
+}
+
+/* Decline Button */
+form button.decline {
+    background: linear-gradient(135deg, #c0392b, #ff4d4d);
+    color: #fff;
+}
+form button.decline:hover {
+    background: linear-gradient(135deg, #e74c3c, #ff6b6b);
+}
+
+/* Status Badges */
+td:nth-child(3) {
+    font-weight: 600;
+    position: relative;
+}
+td:nth-child(3)::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 6px;
+    border-radius: 50%;
+}
+td:nth-child(3):contains("Pending") {
+    color: #e67e22;
+}
+td:nth-child(3):contains("Pending")::before {
+    background: #e67e22;
+}
+td:nth-child(3):contains("Accepted") {
+    color: #27ae60;
+}
+td:nth-child(3):contains("Accepted")::before {
+    background: #27ae60;
+}
+td:nth-child(3):contains("Declined") {
+    color: #c0392b;
+}
+td:nth-child(3):contains("Declined")::before {
+    background: #c0392b;
+}
+
+/* Empty state */
+p {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #777;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+
+/* Animations */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+@keyframes fadeInDown {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+@keyframes fadeInUp {
+  from {opacity: 0; transform: translateY(30px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+@keyframes scaleIn {
+  from {transform: scaleX(0);}
+  to {transform: scaleX(1);}
+}
+@keyframes gradientMove {
+  0% {background-position: 0% 50%;}
+  100% {background-position: 100% 50%;}
+}
+
+
+
+/* For small tablets and large phones (≤ 768px) */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.5rem;
+  }
+  .fancy-table {
+    font-size: 0.95rem;
+    border-radius: 12px;
+  }
+  .fancy-table thead th {
+    padding: 12px;
+    font-size: 1rem;
+  }
+  .fancy-table tbody td {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+  td form button {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+}
+
+/* For phones (≤ 600px) */
+@media (max-width: 600px) {
+  h2 {
+    font-size: 1.3rem;
+  }
+  .fancy-table {
+    font-size: 0.9rem;
+  }
+  .fancy-table thead {
+    font-size: 0.9rem;
+  }
+  .fancy-table tbody td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+  td form button {
+    display: block;
+    width: 100%;  /* buttons stack vertically */
+    margin: 5px auto;
+    font-size: 12px;
+    padding: 8px;
+  }
+}
+
+/* For very small screens (≤ 400px) */
+@media (max-width: 400px) {
+  h2 {
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+  }
+  .fancy-table {
+    border-radius: 8px;
+    font-size: 0.8rem;
+  }
+  .fancy-table thead th {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+  .fancy-table tbody td {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+  td form button {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+}

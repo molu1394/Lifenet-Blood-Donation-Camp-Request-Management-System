@@ -1,0 +1,49 @@
+{% extends base_template %}
+{%load static%}
+
+{%block extra_css%}
+<link rel="stylesheet" href="{%static 'css/camps.css'%}">
+{%endblock%}
+
+{% block content %}
+    <div class="container">
+        <h2>Upcoming Camps</h2>
+        <table class="fancy-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>City</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for camp in camps %}
+                <tr>
+                    <td>{{ camp.name }}</td>
+                    <td>{{ camp.date }}</td>
+                    <td>{{ camp.city }}</td>
+                    <td>{{ camp.address }}</td>
+                    <td>
+                        {% if camp.id in registered_camps %}
+                        <span class="badge registered">Already Registered</span>
+                        {% elif camp.status == "done" %}
+                            <button class="button btn closed" disabled>Registration Closed</button>
+                        {% else %}
+                            {% if user.is_authenticated and user.role == "DONOR" %}
+                                <a href="{% url 'camp:donor_register_camp' camp.id %}" class="button btn register-btn">Register</a>
+                            {%else%}
+                                <a href="{% url 'accounts:login' role='donor' %}" class="button btn register-btn">Register</a>
+                            {%endif%}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5" style="text-align:center;">No upcoming camps.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

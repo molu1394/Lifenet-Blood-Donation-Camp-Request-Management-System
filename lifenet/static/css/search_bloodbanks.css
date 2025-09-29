@@ -1,0 +1,217 @@
+/* ==========================
+   Blood Bank Search Page
+========================== */
+.request-page {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    margin-bottom: 500px;
+}
+
+/* Heading */
+.request-page h2 {
+    font-weight: 800;
+    color: #b30000;
+    margin-bottom: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    position: relative;
+    animation: fadeInDown 1s ease-in-out;
+}
+
+.request-page h2::after {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #b30000, #ff4d4d);
+    margin: 12px auto 0;
+    border-radius: 3px;
+    animation: scaleIn 1s ease-in-out;
+}
+
+/* ==========================
+   Search Form
+========================== */
+.request-page .input {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.request-page form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease;
+}
+
+.request-page form input[type="text"],
+.request-page form select {
+    padding: 10px 14px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+    min-width: 200px;
+    background: #fff;
+}
+
+.request-page form input:focus,
+.request-page form select:focus {
+    border-color: #b30000;
+    box-shadow: 0 0 8px rgba(179, 0, 0, 0.3);
+}
+
+.request-page form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #b30000, #ff4d4d);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.request-page form button:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* ==========================
+   Table
+========================== */
+.request-page .table {
+    max-width: 70%;
+    border-radius: 15px;
+    overflow: hidden;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.request-page .table th {
+    background: linear-gradient(270deg, #b30000, #ff4d4d, #b30000);
+    background-size: 300% 300%;
+    animation: gradientMove 6s infinite linear;
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    text-align: center;
+}
+
+.request-page .table td {
+    text-align: center;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-top: 1px solid rgba(200, 0, 0, 0.15);
+    transition: 0.3s;
+}
+
+.request-page .table tr:hover td {
+    background: rgba(255, 240, 240, 0.7);
+    transform: scale(1.01);
+}
+
+/* ==========================
+   Available Units
+========================== */
+.request-page .table td:nth-child(4) {
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #b30000;
+}
+
+.request-page .table td:nth-child(4)::before {
+    content: "🩸 ";
+}
+
+/* ==========================
+   Action Buttons
+========================== */
+.request-page .table td form button,
+.request-page .table td a.btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.request-page .table td form button:hover,
+.request-page .table td a.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================
+   Empty State
+========================== */
+.request-page .table td[colspan="5"] {
+    font-style: italic;
+    color: #777;
+    padding: 18px;
+    background: #f9f9f9;
+}
+
+/* ==========================
+   Animations
+========================== */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scaleX(0);
+    }
+
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}

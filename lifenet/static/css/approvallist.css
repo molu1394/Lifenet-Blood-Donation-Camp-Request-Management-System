@@ -1,0 +1,135 @@
+/* Global Styles */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+    font-weight: 700;
+    color: #b30000;
+    /* Dark red */
+    margin-top: 20px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+h3 {
+    font-weight: 700;
+    color: black;
+    /* Dark red */
+    margin-top: 20px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    background: #fff;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+
+.bb-table thead th {
+    max-width: 50px;
+    padding: 12px 10px;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 1.5rem;
+    font-weight: 700;
+    background-color: #b30000;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.bb-table tbody td {
+    max-width: 50px;
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 1.2rem;
+    font-weight: 650;
+    color: black;
+}
+
+table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+table tr:hover {
+    background-color: #ffe6e6;
+    transition: 0.3s;
+}
+
+.org-table thead th {
+    max-width: 50px;
+    padding: 12px 40px;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 1.5rem;
+    font-weight: 700;
+    background-color: #b30000;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.org-table tbody td {
+    max-width: 50px;
+    padding: 12px 40px;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 1.2rem;
+    font-weight: 650;
+    color: black;
+}
+
+/* Buttons */
+button {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+button[name="action"][value="approve"] {
+    background-color: #28a745;
+    /* Green */
+    color: #fff;
+}
+
+button[name="action"][value="approve"]:hover {
+    background-color: #218838;
+}
+
+button[name="action"][value="deny"] {
+    background-color: #dc3545;
+    /* Red */
+    color: #fff;
+    margin-left: 8px;
+}
+
+button[name="action"][value="deny"]:hover {
+    background-color: #b52a37;
+}
+
+/* No action text */
+em {
+    color: #6c757d;
+    font-style: italic;
+    font-weight: 500;
+}
+
+/* No records text */
+p {
+    font-weight: 600;
+    color: #555;
+    text-align: center;
+    margin-top: 10px;
+}

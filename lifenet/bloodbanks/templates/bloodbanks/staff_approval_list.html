@@ -1,0 +1,63 @@
+{% extends base_template %}
+{%load static%}
+
+{%block extra_css%}
+<link rel="stylesheet" href="{%static 'css/donor_requests.css'%}">
+<link rel="stylesheet" href="{%static 'css/message.css'%}">
+{%endblock%}
+
+{% block content %}
+<div class="messagesbox">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages|dictsortreversed:"level" %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    <h1>{{ message }}</h1>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% if user.is_authenticated and user.role == 'BLOODBANK' %}
+  <h2>Staff Approval Requests</h2>
+
+  {% if staff_members %}
+    <table class="fancy-table">
+      <thead>
+        <th>Staff Name</th>
+        <th>Mobile</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </thead>
+      {% for staff in staff_members %}
+        <tr>
+          <td>{{ staff.first_name }} {{ staff.last_name }}</td>
+          <td>{{ staff.mobile_number }}</td>
+          <td>{{ staff.approval_status }}</td>
+          <td>
+            {% if staff.approval_status == "Pending" %}
+              <form method="post" action="{% url 'bloodbanks:staff-approval-action' staff.id 'approve' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="accept">Accept</button>
+              </form>
+              <form method="post" action="{% url 'bloodbanks:staff-approval-action' staff.id 'deny' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="decline">Deny</button>
+              </form>
+            {% else %}
+              <em>No action</em>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>No staff found.</p>
+  {% endif %}
+{% else %}
+  <div class="container mt-5 text-center">
+      <h1 class="text-danger">⚠️ Login as BloodBank</h1>
+  </div>
+{% endif %}
+
+{% endblock %}

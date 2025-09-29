@@ -1,0 +1,116 @@
+  :root {
+    --primary-color: #8B0000;
+    --secondary-color: #5C0000;
+    --accent-color: #FFD700;
+    --light-bg: #FDF6F6;
+    --text-color: #fff;
+    --btn-hover: #cc0000;
+    --shadow-glow: 0 0 8px #FFD700, 0 0 20px #FFB700;
+}
+
+.maincontainer {
+    background: var(--light-bg);
+    font-family: 'Poppins', Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px 0;
+}
+
+.camp-card {
+    background: #fff;
+    padding: 25px 32px;
+    border-radius: 20px;
+    box-shadow: 0 8px 44px rgba(139, 0, 0, 0.18), 0 1px 40px #ffd70044;
+    width: 1000px;
+    animation: fadeIn 0.47s cubic-bezier(.3, 1.5, .7, 1.09);
+}
+
+.camp-header {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.camp-header h1{
+    font-weight: 800;
+    color: var(--primary-color);
+    margin: 8px 0;
+    letter-spacing: 1px;
+}
+h2{
+    font-weight: 800;
+    color: var(--primary-color);
+    margin: 8px 0;
+    padding-bottom: 20px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.form-label {
+    font-weight: 600;
+    font-size: 1.4rem;
+    margin-bottom: 6px;
+    color: black;
+}
+#slot{
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+    color: black;
+}
+
+.form-control, .form-select {
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 1.5px solid #e2d8d8;
+    background: #fff;
+    transition: border 0.25s, box-shadow 0.25s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 8px #FFD70077;
+    outline: none;
+}
+
+.btn-submit {
+    background: linear-gradient(45deg, var(--accent-color), #ffb700);
+    color: var(--secondary-color);
+    font-weight: bold;
+    border-radius: 22px;
+    padding: 10px;
+    font-size: 1.3rem;
+    border: none;
+    width: 100%;
+    box-shadow: var(--shadow-glow);
+    transition: all 0.25s;
+}
+
+.btn-submit:hover {
+    background: linear-gradient(45deg, #ccac00, #e6c200);
+    color: var(--primary-color);
+    transform: scale(1.04);
+}
+
+/* Slot Styling */
+.slot-card {
+    border: 1px solid #f1e3c6;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    background: #fdfdfc;
+}
+.slot-card label {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+

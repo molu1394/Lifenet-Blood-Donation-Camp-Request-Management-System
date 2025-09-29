@@ -1,0 +1,61 @@
+{% extends base_template %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/inventory_list.css' %}">
+<link rel="stylesheet" href="{%static 'css/message.css'%}">
+{% endblock %}
+
+{% block content %}
+<div class="messagesbox">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages|dictsortreversed:"level" %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    <h1>{{ message }}</h1>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+{% if user.is_authenticated %}
+    {% if user.role == "BLOODBANK" or user.role == "STAFF" %}
+        <div class="container mt-4">
+            <h2 class="mb-4">{{ user.bloodbankprofile.bloodbank_name }} - Inventory</h2>
+        </div>
+    {% else %}
+        <div class="container mt-4">
+            <h2 class="mb-4">{{ user.staffprofile.bloodbank_name }} - Inventory</h2>
+        </div>
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Blood Group</th>
+                <th>Units Available</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in bankinventory %}
+            <tr>
+                <td>{{ item.blood_group }}</td>
+                <td>{{ item.units_available }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2" class="text-center">No inventory data available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{% url 'inventory:bloodbank_inventory_update' %}">Update</a>
+
+{% else %}
+    <div class="container mt-5 text-center">
+        <h1 class="text-danger">⚠️ Login as BLOODBANK or STAFF</h1>
+    </div>
+{% endif %}
+{% endblock %}

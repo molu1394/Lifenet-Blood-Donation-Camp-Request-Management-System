@@ -1,0 +1,77 @@
+{% extends base_template %}
+{%load static%}
+
+{%block extra_css%}
+<link rel="stylesheet" href="{%static 'css/campdetails.css'%}">
+<link rel="stylesheet" href="{% static 'css/message.css' %}">
+{%endblock%}
+
+{% block content %}
+<div class="messagesbox">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages|dictsortreversed:"level" %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    <h1>{{ message }}</h1>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+  {% if user.is_authenticated %}
+    {% if user.role == "BLOODBANK" or user.role == "STAFF" or user.role == "ORG" %}
+      <div class="container">
+        <h2>{{ camp.name }}</h2>
+          <p><strong>Description:</strong> {{ camp.description }}</p>
+          <p><strong>Address:</strong> {{ camp.address }}, {{ camp.city }}, {{ camp.state }}</p>
+          <p><strong>Date:</strong> {{ camp.date }} ({{ camp.start_time }} - {{ camp.end_time }})</p>
+          <p><strong>Status:</strong> {{ camp.status }}</p>
+          <a href="{%url 'inventory:camp_inventory_update' camp.id%}" id="button"  class="btn btn-primary">Stock Check</a>
+
+      <h2>Registered Donor</h2>
+
+      {% if appointments %}
+        <table class="table table-striped">
+          <tr>
+            <th>Donor Name</th>
+            <th>Mobile</th>
+            <th>Slot</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          {% for appointment in appointments %}
+            <tr>
+              <td>{{ appointment.donor.first_name }} {{ appointment.donor.last_name }}</td>
+              <td>{{ appointment.donor.mobile_number }}</td>
+              <td>{{ appointment.slot.start_time }} - {{ appointment.slot.end_time }}</td>
+              <td>{{ appointment.status }}</td>
+              <td>
+                {% if appointment.status == "BOOKED" %}
+                  <form method="post" action="{% url 'camp:mark_visited' appointment.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-mark-attended">Mark as Visited</button>
+                  </form>
+                {% else %}
+                  <span class="text-muted">{{ appointment.get_status_display }}</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      {% else %}
+        <p>No donors registered yet.</p>
+      {% endif %}
+      </div>
+    {% else %}
+        <div class="container mt-5 text-center">
+            <h1 class="text-danger">⚠️ Login as BLOODBANK, ORG, or STAFF</h1>
+        </div>
+    {% endif %}
+{% else %}
+    <div class="container mt-5 text-center">
+        <h1 class="text-danger">⚠️ Login as BLOODBANK, ORG, or STAFF</h1>
+    </div>
+{% endif %}
+
+
+{% endblock %}

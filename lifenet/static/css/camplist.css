@@ -1,0 +1,154 @@
+
+    /* ==========================
+   Container + Heading
+========================== */
+.container {
+    margin-top: 30px;
+    padding: 20px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    backdrop-filter: blur(6px);
+}
+
+h2 {
+    font-weight: 800;
+    color: #b30000;
+    margin-bottom: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    position: relative;
+}
+h2::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #b30000, #ff4d4d);
+    margin: 12px auto 0;
+    border-radius: 2px;
+}
+
+/* ==========================
+   Buttons
+========================== */
+.btn {
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #28a745, #45d964);
+    border: none;
+}
+.btn-success:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    color:#fd6969;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #007bff, #4dabf7);
+    border: none;
+}
+.btn-primary:hover {
+    transform: scale(1.05);
+    color:black;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #da2234, #ff6b81);
+    border: none;
+}
+.btn-danger:hover {
+    transform: scale(1.05);
+    color:black;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #17a2b8, #4dd0e1);
+    border: none;
+    color:white
+}
+.btn-info:hover {
+    transform: scale(1.05);
+    color:black;
+}
+
+/* ==========================
+   Table Styling
+========================== */
+.table {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: #fff;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.table thead th {
+    background: linear-gradient(270deg, #b30000, #ff4d4d, #b30000);
+    background-size: 300% 300%;
+    animation: gradientMove 5s infinite linear;
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 12px;
+    text-align: center;
+    letter-spacing: 0.6px;
+}
+
+.table tbody td {
+    padding: 12px;
+    font-size:1.1rem;
+    font-weight: 550;
+    text-align: center;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    vertical-align: middle;
+    transition: background 0.3s ease;
+}
+
+.table tbody tr:hover td {
+    background: rgba(255, 230, 230, 0.5);
+}
+
+/* ==========================
+   Status Dropdown
+========================== */
+select[name="status"] {
+    padding: 6px 10px;
+    border-radius: 20px;
+    border: 2px solid #ccc;
+    outline: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+select[name="status"]:hover {
+    border-color: #b30000;
+}
+
+/* ==========================
+   Empty State
+========================== */
+.table td[colspan="5"] {
+    font-style: italic;
+    color: #777;
+    padding: 18px;
+    background: #fafafa;
+}
+
+/* ==========================
+   Animations
+========================== */
+@keyframes gradientMove {
+  0% {background-position: 0% 50%;}
+  100% {background-position: 100% 50%;}
+}
+

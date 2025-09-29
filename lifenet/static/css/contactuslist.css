@@ -1,0 +1,111 @@
+/* Global Styles */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Montserrat', sans-serif;
+}
+
+h2 {
+    font-weight: 800;
+    color: #b30000; /* Dark red */
+    margin: 20px 0;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    position: relative;
+}
+
+h2::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: #FFD700; /* Golden underline */
+    margin: 8px auto 0;
+    border-radius: 2px;
+}
+
+/* Table Container */
+.table-container {
+    max-width: 1500px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.08);
+    overflow-x: auto;
+}
+
+/* Table Styles */
+.fancy-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.fancy-table thead th {
+    padding: 14px 12px;
+    text-align: center;
+    border-bottom: 2px solid #dee2e6;
+    font-size: 1.3rem;
+    font-weight: 800;
+    background-color: #b30000;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.fancy-table tbody td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 1.15rem;
+    font-weight:580;
+    color: black;
+    vertical-align: middle;
+}
+
+.fancy-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.fancy-table tbody tr:hover {
+    background-color: #fff0f0;
+    transition: background 0.3s ease;
+}
+
+/* Status Dropdown */
+select {
+    padding: 6px 10px;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+select:hover {
+    border-color: #b30000;
+    box-shadow: 0px 0px 5px rgba(179, 0, 0, 0.3);
+}
+
+option[value="Pending"] {
+    color: #b30000;
+    font-weight: 600;
+}
+
+option[value="Resolved"] {
+    color: #28a745;
+    font-weight: 600;
+}
+
+/* Empty Table */
+.fancy-table tbody tr td[colspan] {
+    text-align: center;
+    font-style: italic;
+    font-weight: 600;
+    color: #666;
+}
+

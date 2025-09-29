@@ -1,0 +1,142 @@
+strong {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.container {
+    max-width: 950px;
+    margin: 30px auto;
+    padding: 30px;
+    background: linear-gradient(135deg, #fff5f5, #ffecec);
+    border-radius: 14px;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.15);
+    font-weight: bold;
+    /* All text bold */
+}
+
+/* Headings */
+.container h2 {
+    font-size: 1.8rem;
+    font-weight: bolder;
+    margin-bottom: 18px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+}
+
+.container h2::after {
+    content: "";
+    display: block;
+    width: 70px;
+    height: 3px;
+    margin: 8px auto 0;
+    border-radius: 2px;
+}
+
+/* Camp details section */
+.container p {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin: 10px 0;
+    padding: 12px;
+    background: #fff0f0;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+    font-weight: bold;
+}
+
+
+
+/* Stock Check Button */
+#button {
+    display: inline-block;
+    background: rgb(80, 80, 153);
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+}
+
+#button:hover {
+    background: rgb(0, 0, 255);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    font-weight: bold;
+}
+
+.table th,
+.table td {
+    padding: 14px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.table th {
+    background: #d62828;
+    color: #fff;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.table tr:nth-child(even) {
+    background: #fff0f0;
+}
+
+.table tr:hover {
+    background: rgba(214, 40, 40, 0.1);
+    transition: background 0.3s ease;
+}
+
+.table td {
+    font-size: 0.95rem;
+    color: black;
+}
+
+/* No donors message */
+.container p.no-donors {
+    text-align: center;
+    background: #ffe0e0;
+    color: #a50000;
+    font-weight: bold;
+    border-left: 5px solid #d62828;
+}
+.btn-mark-attended {
+    background: linear-gradient(135deg, #28a745, #218838); /* nice green gradient */
+    color: white;
+    font-weight: 600;
+    padding: 6px 14px;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transition: all 0.25s ease-in-out;
+    cursor: pointer;
+}
+
+.btn-mark-attended:hover {
+    background: linear-gradient(135deg, #218838, #1e7e34);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.btn-mark-attended:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}

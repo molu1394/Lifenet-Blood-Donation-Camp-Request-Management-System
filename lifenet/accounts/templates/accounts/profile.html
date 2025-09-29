@@ -1,0 +1,109 @@
+{% extends base_template %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{%static 'css/profile.css' %}">
+<link rel="stylesheet" href="{%static 'css/message.css'%}">
+{% endblock %}
+
+{% block content %}
+<div class="messagesbox">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages|dictsortreversed:"level" %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    <h1>{{ message }}</h1>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+<div class="profile-container">
+    <div class="profile-header">
+        {% if user.role == 'DONOR' and user.donorprofile %}
+            {% if user.donorprofile.profile_pic %}
+                <img src="{{ user.donorprofile.profile_pic.url }}" alt="Profile Picture">
+            {% else %}
+                <img src="{% static 'images/profile_pic.jpg' %}" alt="Profile Picture">
+            {% endif %}
+        {% elif user.role == 'PATIENT' and user.patientprofile %}
+            {% if user.patientprofile.profile_pic and user.patientprofile.profile_pic.url %}
+                <img src="{{ user.patientprofile.profile_pic.url }}" alt="Profile Picture">
+            {% else %}
+                <img src="{% static 'images/profile_pic.jpg' %}" alt="Profile Picture">
+            {% endif %}
+        {% elif user.role == 'STAFF' and user.staffprofile %}
+            {% if user.staffprofile.profile_pic  %}
+                <img src="{{ user.staffprofile.profile_pic.url }}" alt="Profile Picture">
+            {% else %}
+                <img src="{% static 'images/profile_pic.jpg' %}" alt="Profile Picture">
+            {% endif %}
+        {% endif %}
+        <h1 class="profile-title">{{ user.username }}'s Profile</h1>
+    </div>
+
+    <div class="profile-info">
+        {% if user.role == 'DONOR' and user.donorprofile %}
+            <div class="profile-info-row"><strong>First Name:</strong><p>{{ user.donorprofile.first_name }}</p></div>
+            <div class="profile-info-row"><strong>Last Name:</strong><p>{{ user.donorprofile.last_name }}</p></div>
+            <div class="profile-info-row"><strong>Blood Group:</strong><p>{{ user.donorprofile.blood_group }}</p></div>
+            <div class="profile-info-row"><strong>Date of Birth:</strong><p>{{ user.donorprofile.dob }}</p></div>
+            <div class="profile-info-row"><strong>Age:</strong><p>{{ user.donorprofile.age }}</p></div>
+            <div class="profile-info-row"><strong>Gender:</strong><p>{{ user.donorprofile.gender }}</p></div>
+            <div class="profile-info-row"><strong>Mobile:</strong><p>{{ user.donorprofile.mobile_number }}</p></div>
+            <div class="profile-info-row"><strong>Email:</strong><p>{{ user.email }}</p></div>
+            <div class="profile-info-row"><strong>City:</strong><p>{{ user.donorprofile.address }}</p></div>
+            <div class="profile-info-row"><strong>Ready to Donate:</strong>
+                {%if user.donorprofile.ready_to_donate %}
+                <p>Yes</p>
+                {%else%}
+                <p>No</p>
+                {%endif%}
+            </div>
+            <a href="{% url 'donors:donor_profile_update' %}" class="btn btn-primary">Update</a>
+        
+        {% elif user.role == 'PATIENT' and user.patientprofile %}
+            <div class="profile-info-row"><strong>First Name:</strong><p>{{ user.patientprofile.first_name }}</p></div>
+            <div class="profile-info-row"><strong>Last Name:</strong><p>{{ user.patientprofile.last_name }}</p></div>
+            <div class="profile-info-row"><strong>City:</strong><p>{{ user.patientprofile.address }}</p></div>
+            <div class="profile-info-row"><strong>Mobile:</strong><p>{{ user.patientprofile.mobile_number }}</p></div>
+            <div class="profile-info-row"><strong>Email:</strong><p>{{ user.email }}</p></div>
+            <div class="profile-info-row"><strong>Blood Requested:</strong><p>{{ user.patientprofile.blood_group_req }}</p></div>
+            <a href="{% url 'patients:patient_profile_update' %}" class="btn btn-primary">Update</a>
+
+        {% elif user.role == 'BLOODBANK' and user.bloodbankprofile %}
+            <div class="profile-info-row"><strong>BloodBank Name:</strong><p>{{ user.bloodbankprofile.bloodbank_name }}</p></div>
+            <div class="profile-info-row"><strong>Mobile:</strong><p>{{ user.bloodbankprofile.mobile_number }}</p></div>
+            <div class="profile-info-row"><strong>Email:</strong><p>{{ user.email }}</p></div>
+            <div class="profile-info-row"><strong>City:</strong><p>{{ user.bloodbankprofile.address }}</p></div>
+            <div class="profile-info-row"><strong>Authorized No.:</strong><p>{{ user.bloodbankprofile.authorize_number }}</p></div>
+            <a href="{% url 'bloodbanks:bloodbank_profile_update' %}" class="btn btn-primary">Update</a>
+
+        {% elif user.role == 'ORG' and user.organizationprofile %}
+            <div class="profile-info-row"><strong>Organization:</strong><p>{{ user.organizationprofile.organization_name }}</p></div>
+            <div class="profile-info-row"><strong>Type:</strong><p>{{ user.organizationprofile.organization_type }}</p></div>
+            <div class="profile-info-row"><strong>Mobile:</strong><p>{{ user.organizationprofile.mobile_number }}</p></div>
+            <div class="profile-info-row"><strong>Email:</strong><p>{{ user.email }}</p></div>
+            <div class="profile-info-row"><strong>Authorized No.:</strong><p>{{ user.organizationprofile.authorize_number }}</p></div>
+            <a href="{% url 'organizations:org_profile_update' %}" class="btn btn-primary">Update</a>
+
+        {% elif user.role == 'STAFF' and user.staffprofile %}
+            <div class="profile-info-row"><strong>First Name:</strong><p>{{ user.staffprofile.first_name }}</p></div>
+            <div class="profile-info-row"><strong>Last Name:</strong><p>{{ user.staffprofile.last_name }}</p></div>
+            <div class="profile-info-row"><strong>BloodBank:</strong><p>{{ user.staffprofile.bloodbank_name }}</p></div>
+            <div class="profile-info-row"><strong>Mobile:</strong><p>{{ user.staffprofile.mobile_number }}</p></div>
+            <div class="profile-info-row"><strong>Email:</strong><p>{{ user.email }}</p></div>
+            <a href="{% url 'bloodbanks:staff_profile_update' %}" class="btn btn-primary">Update</a>
+
+        {% elif user.role == 'ADMIN' and user.adminprofile %}
+            <div class="profile-info-row"><strong>First Name:</strong><p>{{ user.adminprofile.first_name }}</p></div>
+            <div class="profile-info-row"><strong>Last Name:</strong><p>{{ user.adminprofile.last_name }}</p></div>
+            <div class="profile-info-row"><strong>Email:</strong><p>{{ user.email }}</p></div>
+            <a href="{% url 'core:admin_profile_update' %}" class="btn btn-primary">Update</a>
+        
+        {% else %}
+            <h3>No Profile Data Available</h3>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

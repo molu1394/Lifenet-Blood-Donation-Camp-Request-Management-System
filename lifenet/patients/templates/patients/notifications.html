@@ -1,0 +1,29 @@
+{% extends base_template %}
+{%load static%}
+{% block extra_css %}
+<link rel="stylesheet" href="{%static 'css/notifications.css' %}">
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated and user.role == 'PATIENT' %}
+  <div class="notif-container">
+    <h2 class="notif-title">My Notifications</h2>
+    {% if notifications %}
+      <ul class="notif-list">
+        {% for note in notifications %}
+          <li class="notif-item">
+            <span class="notif-message">{{ note.message }}</span>
+            <small class="notif-time">{{ note.created_at|date:"d M Y, H:i" }}</small>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="notif-empty">No notifications yet.</p>
+    {% endif %}
+  </div>
+{% else %}
+  <div class="container mt-5 text-center">
+    <h1 class="text-danger">⚠️ Login as Patient</h1>
+  </div>
+{% endif %}
+{% endblock %}

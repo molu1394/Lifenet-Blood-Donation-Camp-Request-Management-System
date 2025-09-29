@@ -1,0 +1,295 @@
+/* Headings */
+h2 {
+    font-weight: 800;
+    color: #b30000;
+    margin-bottom: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    position: relative;
+    animation: fadeInDown 1s ease-in-out;
+}
+h2::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #b30000, #ff4d4d);
+    margin: 12px auto 0;
+    border-radius: 3px;
+    animation: scaleIn 1s ease-in-out;
+}
+
+/* Fancy Table */
+.fancy-table {
+    width: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 1s ease-in-out;
+}
+.fancy-table:hover {
+    transform: scale(1.01);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+/* Table Header */
+.fancy-table thead {
+    background: linear-gradient(270deg, #b30000, #ff4d4d, #b30000);
+    background-size: 300% 300%;
+    animation: gradientMove 6s infinite linear;
+    color: #fff;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+.fancy-table thead th {
+    border: none !important;
+    padding: 16px;
+    font-size: 1.3rem;
+
+    text-align: center;
+}
+
+/* Table Rows */
+.fancy-table tbody tr {
+    transition: all 0.4s ease;
+}
+.fancy-table tbody tr:hover {
+    background: rgba(255, 230, 230, 0.6) !important;
+    box-shadow: inset 0 0 12px rgba(255, 77, 77, 0.35);
+    transform: scale(1.01);
+}
+.fancy-table tbody td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 15px;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #222;
+    border-top: 1px solid rgba(255, 200, 200, 0.4);
+}
+
+/* Buttons */
+form {
+    display: inline-block;
+    margin: 3px;
+}
+td form button {
+    border: none;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+td form button:hover {
+    transform: translateY(-2px) scale(1.07);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+}
+td form button:active {
+    transform: scale(0.95);
+}
+
+/* Accept Button */
+td form button.accept {
+    background: linear-gradient(135deg, #28a745, #4cd964);
+    color: #fff;
+}
+td form button.accept:hover {
+    background: linear-gradient(135deg, #34c759, #5ef38c);
+}
+
+/* Decline Button */
+form button.decline {
+    background: linear-gradient(135deg, #c0392b, #ff4d4d);
+    color: #fff;
+}
+form button.decline:hover {
+    background: linear-gradient(135deg, #e74c3c, #ff6b6b);
+}
+
+/* Status Badges (use classes instead of :contains) */
+.badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-block;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+
+/* Status Colors */
+.badge.confirmed {
+    background: #06d6a0;
+    color: white;
+}
+
+.badge.pending {
+    background: #ffd166;
+    color: #333;
+}
+
+.badge.cancelled {
+    background: #ef476f;
+    color: white;
+}
+
+.badge.registered {
+    background: #ffd166;
+    color: #333;
+}
+
+.button {
+    border: none;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    min-width: 120px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+}
+#btn {
+    border-radius: 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+.btn-danger {
+    background: linear-gradient(135deg, #da2234, #ff6b81);
+    border: none;
+}
+.btn-danger:hover {
+    transform: scale(1.05);
+    color:black;
+}
+/* Register button */
+.register-btn {
+    background: linear-gradient(135deg, #06d6a0, #1b9aaa);
+}
+.register-btn:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+}
+
+/* Closed button */
+.btn.closed {
+    background: #adb5bd;
+    cursor: not-allowed;
+}
+
+/* Empty state */
+p.empty {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #777;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+
+/* 🔎 Search Bar */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-top: 20px;
+    animation: fadeInDown 1s ease-in-out;
+}
+
+.search-container form {
+    display: flex;
+    align-items: center;
+    
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+}
+
+.search-container form:hover {
+    box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+    transform: scale(1.02);
+}
+
+/* Input field */
+.search-container input[type="text"],
+.search-container input[type="search"] {
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding: 8px 14px;
+    border-radius: 30px;
+    min-width: 250px;
+    background: #fff;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.search-container input[type="text"]:focus,
+.search-container input[type="search"]:focus {
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.15), 0 0 8px #ff4d4d;
+}
+
+/* Search Button */
+.search-container button {
+    border: none;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    background: linear-gradient(135deg, #b30000, #ff4d4d);
+    color: #fff;
+}
+
+.search-container button:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    filter: brightness(1.1);
+}
+
+.search-container button:active {
+    transform: scale(0.95);
+}
+
+
+/* Animations */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+@keyframes fadeInDown {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+@keyframes fadeInUp {
+  from {opacity: 0; transform: translateY(30px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+@keyframes scaleIn {
+  from {transform: scaleX(0);}
+  to {transform: scaleX(1);}
+}
+@keyframes gradientMove {
+  0% {background-position: 0% 50%;}
+  100% {background-position: 100% 50%;}
+}

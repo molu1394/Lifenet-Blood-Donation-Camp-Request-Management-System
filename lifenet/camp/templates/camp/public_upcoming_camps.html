@@ -1,0 +1,57 @@
+{%extends 'homepage.html'%}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/camps.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-bottom: 500px;" >
+    <div class="public-camp">
+        <div class="search-container" style="margin-bottom: 20px; text-align:center;">
+            <form method="get" action="">
+                {{ form.location }}
+                <button type="submit" class="btn btn-danger">Search</button>
+            </form>
+        </div>
+
+        <h2>Upcoming Camps</h2>
+        <table class="fancy-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>City</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for camp in camps %}
+                <tr>
+                    <td>{{ camp.name }}</td>
+                    <td>{{ camp.date }}</td>
+                    <td>{{ camp.city }}</td>
+                    <td>{{ camp.address }}</td>
+                    <td>
+                        <!-- Redirect to login since public users are not logged in -->
+                        <a href="{% url 'accounts:login' role='donor' %}" class="button btn register-btn">Register</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" style="text-align:center;">
+                        No upcoming camps found for this location.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 🔎 Search Form -->
+
+</div>
+{% endblock %}

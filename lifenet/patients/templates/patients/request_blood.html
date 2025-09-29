@@ -1,0 +1,9 @@
+{%extends base_template%}
+{%block content%}
+<h2>Send Blood Request</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Send Request</button>
+</form>
+{%endblock%}

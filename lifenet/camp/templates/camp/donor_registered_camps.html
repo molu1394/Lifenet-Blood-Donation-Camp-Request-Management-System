@@ -1,0 +1,76 @@
+{% extends base_template %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/camps.css' %}">
+<link rel="stylesheet" href="{% static 'css/message.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="messagesbox">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages|dictsortreversed:"level" %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    <h1>{{ message }}</h1>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+{% if user.is_authenticated and user.role == "DONOR" %}
+    <div class="container">
+        <h2>My Registered Camps</h2>
+        <table class="fancy-table">
+            <thead>
+                <tr>
+                    <th>Camp</th>
+                    <th>Date</th>
+                    <th>Slot</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for reg in appointments %}
+                <tr>
+                    <td>{{ reg.camp.name }}</td>
+                    <td>{{ reg.camp.date }}</td>
+                    <td>{{ reg.slot }}</td>
+                    <td>
+                        {% if reg.status == "BOOKED" %}
+                            <span class="badge confirmed">BOOKED</span>
+                        {% elif reg.status == "VISITED" %}
+                            <span class="badge pending">VISITED</span>
+                        {% else %}
+                            <span class="badge cancelled">Cancelled</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if reg.status == "BOOKED" %}
+                            <form method="post" action="{% url 'camp:donor_cancel_camp' reg.camp.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-md" id="btn"
+                                    onclick="return confirm('Are you sure you want to cancel the appointments?');">
+                                    Cancel Booking
+                                </button>
+                            </form>
+                        {% else %}
+                            <span class="text-muted">—</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5" style="text-align:center;">You haven’t registered for any camps yet.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% else %}
+    <div class="container mt-5 text-center">
+        <h1 class="text-danger">⚠️ Login as DONOR</h1>
+    </div>
+{% endif %}
+{% endblock %}

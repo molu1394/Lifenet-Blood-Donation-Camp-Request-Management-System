@@ -1,0 +1,58 @@
+{% extends base_template %}
+{%load static%}
+
+{%block extra_css%}
+<link rel="stylesheet" href="{%static 'css/donorlist.css' %}">
+{%endblock%}
+
+{% block content %}
+{% if user.is_authenticated %}
+    {% if user.role == "BLOODBANK" or user.role == "STAFF"%}
+        <h2>Available Donors</h2>
+
+        <form method="get" class="form-inline mb-3">
+            <input type="text" name="location" placeholder="Enter location" 
+                value="{{ request.GET.location }}">
+            
+            <select name="blood_group">
+                <option value="">-- Select Blood Group --</option>
+                {% for bg in blood_groups %}
+                    <option value="{{ bg }}">{{ bg }}</option>
+                {% endfor %}
+            </select>
+            
+            <button type="submit">Search</button>
+        </form>
+
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>Blood Group</th>
+                <th>Gender</th>
+                <th>Location</th>
+                <th>Mobile</th>
+            </tr>
+            {% for donor in donors %}
+            <tr>
+                <td>{{ donor.first_name }} {{ donor.last_name }}</td>
+                <td>{{ donor.blood_group }}</td>
+                <td>{{ donor.gender }}</td>
+                <td>{{ donor.address }}</td>
+                <td>{{ donor.mobile_number }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No donors found.</td></tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="container mt-5 text-center">
+            <h1 class="text-danger">⚠️ Login as BLOODBANK or STAFF</h1>
+        </div>
+    {% endif %}
+{% else %}
+    <div class="container mt-5 text-center">
+        <h1 class="text-danger">⚠️ Login as BLOODBANK or STAFF</h1>
+    </div>
+{% endif %}
+{% endblock %}
+

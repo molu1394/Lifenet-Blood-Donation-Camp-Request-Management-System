@@ -1,0 +1,88 @@
+{% extends base_template %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/make_request.css' %}">
+<link rel="stylesheet" href="{%static 'css/donor_requests.css' %}">
+<link rel="stylesheet" href="{%static 'css/message.css'%}">
+{% endblock %}
+
+{% block content %}
+<div class="messagesbox">
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages|dictsortreversed:"level" %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+            <h1>{{ message }}</h1>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+{% if user.is_authenticated and user.role == 'PATIENT' %}
+<h2 class="mb-4">Request Blood</h2>
+<div class="card shadow p-4">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Blood Group</label>
+            {{ form.blood_group }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Location</label>
+            {{ form.location }}
+        </div>
+        <button type="submit" class="btn btn-danger">Submit Request</button>
+    </form>
+</div>
+
+<h2>🩸 My Blood Requests</h2>
+    <table class="fancy-table">
+        <thead>
+            <tr>
+                <th>Blood Group</th>
+                <th>Accepted By</th>
+                <th>Contact Number</th>
+                <th>Location</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for req in requests %}
+            <tr>
+                <td>{{ req.blood_group }}</td>
+                {% if req.accepted_by %}
+                    <td>
+                        Donor: {{ req.accepted_by.first_name }} {{ req.accepted_by.last_name }}
+                    </td>
+                    <td>
+                        📞 {{ req.accepted_by.mobile_number }}
+                    </td>
+                    <td>
+                        {{req.accepted_by.address}}
+                    </td>
+                
+                {%else%}
+                    <td>
+                        ⏳ Waiting for donor
+                    </td>
+                    <td>-</td>
+                    <td>-</td>    
+                {% endif %}
+                <td>{{ req.date_requested|date:"d M Y H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No requests yet</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% else %}
+    <div class="container mt-5 text-center">
+        <h1 class="text-danger">⚠️ Login as Patient</h1>
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends base_template %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{%static 'css/campcreate.css'%}">
+<link rel="stylesheet" href="{%static 'css/message.css'%}">
+{% endblock %}
+
+{% block content %}
+<div class="messagesbox">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages|dictsortreversed:"level" %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ error }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if form.errors %}
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ field|capfirst }}:</strong> {{ error }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    {% if formset.errors %}
+        {% for slot_form in formset %}
+            {% for field, errors in slot_form.errors.items %}
+                {% for error in errors %}
+                    <div class="alert alert-danger">
+                        <strong>Slot {{ forloop.parentloop.counter }} {{ field|capfirst }}:</strong> {{ error }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+</div>
+
+{% if user.is_authenticated %}
+{% if user.role == "BLOODBANK" or user.role == "STAFF" or user.role == "ORG" %}
+<div class="maincontainer">
+    <div class="camp-card">
+        <div class="camp-header">
+            <h1>{% if form.instance.pk %}Update Camp{% else %}Create New Camp{% endif %}</h1>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Camp Name</label>
+                {{ form.name }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                {{ form.description }}
+            </div>
+
+            <div class="row g-2">
+                <div class="col-6 mb-3">
+                    <label class="form-label">State</label>
+                    {{ form.state }}
+                </div>
+                <div class="col-6 mb-3">
+                    <label class="form-label">City</label>
+                    {{ form.city }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Address</label>
+                {{ form.address }}
+            </div>
+
+            <div class="row g-2">
+                <div class="col-4 mb-3">
+                    <label class="form-label">Date</label>
+                    {{ form.date }}
+                </div>
+                <div class="col-4 mb-3">
+                    <label class="form-label">Start Time</label>
+                    {{ form.start_time }}
+                </div>
+                <div class="col-4 mb-3">
+                    <label class="form-label">End Time</label>
+                    {{ form.end_time }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Organization</label>
+                {{ form.organization }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Blood Bank</label>
+                {{ form.bloodbank }}
+            </div>
+
+            {% if not form.instance.pk %}
+            <hr>
+            <h2>Camp Slots</h2>
+            {{ formset.management_form }}
+            {% for slot_form in formset %}
+            <div class="slot-card row g-3">
+                <div class="col-md-4">
+                    <label class="form-label" id="slot">Start Time</label>
+                    {{ slot_form.start_time }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" id="slot">End Time</label>
+                    {{ slot_form.end_time }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" id="slot">Capacity</label>
+                    {{ slot_form.capacity }}
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <button type="submit" class="btn-submit mt-3">
+                {% if form.instance.pk %} Update {% else %} Create {% endif %}
+            </button>
+        </form>
+
+        <!-- Error Messages -->
+
+    </div>
+</div>
+{% else %}
+<div class="container mt-5 text-center">
+    <h1 class="text-danger">⚠️ Login as BLOODBANK, ORG, or STAFF</h1>
+</div>
+{% endif %}
+{% else %}
+<div class="container mt-5 text-center">
+    <h1 class="text-danger">⚠️ Login as BLOODBANK, ORG, or STAFF</h1>
+</div>
+{% endif %}
+{% endblock %}

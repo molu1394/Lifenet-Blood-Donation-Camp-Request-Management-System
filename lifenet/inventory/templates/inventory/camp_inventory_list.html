@@ -1,0 +1,50 @@
+{% extends base_template %}
+{%load static%}
+
+{%block extra_css%}
+<link rel="stylesheet" href="{%static 'css/inventory_list.css'%}">
+<link rel="stylesheet" href="{%static 'css/message.css'%}">
+{%endblock%}
+
+{% block content %}
+<div class="messagesbox">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages|dictsortreversed:"level" %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    <h1>{{ message }}</h1>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+  {% if user.is_authenticated %}
+    {% if user.role == "BLOODBANK" or user.role == "STAFF" or user.role == "ORG" %}
+      <h2>Inventory for {{ camp.name }}</h2>
+
+      <table class="table table-striped">
+        <tr>
+          <th>Blood Group</th>
+          <th>Units Collected</th>
+        </tr>
+        {% for inv in inventory %}
+        <tr>
+          <td>{{ inv.blood_group }}</td>
+          <td>{{ inv.units_collected }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+          <a href="{% url 'inventory:camp_inventory_update' camp.id %}" class="btn btn-primary">Update</a>
+    {% else %}
+        <div class="container mt-5 text-center">
+            <h1 class="text-danger">⚠️ Login as BLOODBANK, ORG, or STAFF</h1>
+        </div>
+    {% endif %}
+  {% else %}
+    <div class="container mt-5 text-center">
+        <h1 class="text-danger">⚠️ Login as BLOODBANK, ORG, or STAFF</h1>
+    </div>
+  {% endif %}
+{% endblock %}
+

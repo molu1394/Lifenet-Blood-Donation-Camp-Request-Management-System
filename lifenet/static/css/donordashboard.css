@@ -1,0 +1,83 @@
+/* Global Styles */
+#body {
+    background-color: #f8f9fa;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.dashboard-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #8B0000;
+}
+
+/* Dashboard Cards */
+.dashboard-card {
+    border-radius: 20px;
+    padding: 40px 30px;
+    min-height: 260px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    text-align: center;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 10px 22px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-card i {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.dashboard-card h5 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #5C0000;
+}
+
+.dashboard-card p {
+    font-size: 1rem;
+    color: #6c757d;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.dashboard-card .btn {
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Quick Stats */
+.quick-stats-card {
+    border-radius: 20px;
+    padding: 25px;
+    transition: 0.3s;
+    background: #fff;
+}
+
+.quick-stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.quick-stats-card h5 {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #5C0000;
+    margin-bottom: 15px;
+}
+.hr-gold {
+    border: 0;
+    height: 3px;
+    background: linear-gradient(to right, #FFD700, #FFA500, #FFD700);
+    border-radius: 50px;
+    width: 60%;
+    margin: 20px auto;
+}

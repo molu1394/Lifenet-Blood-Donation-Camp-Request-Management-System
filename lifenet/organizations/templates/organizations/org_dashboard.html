@@ -1,0 +1,68 @@
+{% extends base_template %}
+{%load static%}
+{% block extra_css %}
+<link rel="stylesheet" href="{%static 'css/orgdashboard.css' %}">
+<link rel="stylesheet" href="{%static 'css/message.css'%}">
+{% endblock %}
+
+{% block content %}
+<div class="messagesbox">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages|dictsortreversed:"level" %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    <h1>{{ message }}</h1>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% if user.is_authenticated and user.role == 'ORG' %}
+    <div class="container mt-5" id="org-dashboard">
+        <h1 class="dashboard-title">Organization Dashboard</h1>
+        <h2 class="text-center mb-5">Welcome, {{ user.username }}</h2>
+
+        <hr class="hr-gold">
+        
+        <div class="row">
+            <!-- Create Camp -->
+            <div class="col-md-6 mb-4">
+                <div class="dashboard-card">
+                    <i class="fas fa-calendar-plus text-primary"></i>
+                    <h5>Create Camp</h5>
+                    <p>Organize new blood donation camps</p>
+                    <a href="{% url 'camp:organizer_camp_create' %}" class="btn btn-outline-primary">Create</a>
+                </div>
+            </div>
+
+            <!-- Camp List -->
+            <div class="col-md-6 mb-4">
+                <div class="dashboard-card">
+                    <i class="fas fa-list text-success"></i>
+                    <h5>Camp List</h5>
+                    <p>View and manage your organized camps</p>
+                    <a href="{% url 'camp:organizer_camp_list' %}" class="btn btn-outline-success">View</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Centered Profile Card -->
+        <div class="row justify-content-center">
+            <div class="col-md-6 mb-4">
+                <div class="dashboard-card">
+                    <i class="fas fa-user-circle text-dark"></i>
+                    <h5>View Profile</h5>
+                    <p>Manage and update your organization profile</p>
+                    <a href="{% url 'accounts:profile' %}" class="btn btn-outline-dark">Open</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% else %}
+<div class="container mt-5 text-center">
+    <h1 class="text-danger">⚠️ Login as Organization</h1>
+</div>
+{% endif %}
+{% endblock %}
+

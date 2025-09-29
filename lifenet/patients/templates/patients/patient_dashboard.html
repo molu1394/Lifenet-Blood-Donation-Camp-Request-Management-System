@@ -1,0 +1,100 @@
+{% extends base_template %}
+{%load static%}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{%static 'css/patientdashboard.css' %}">
+<link rel="stylesheet" href="{%static 'css/message.css'%}">
+{% endblock %}
+
+
+{% block content %}
+<div class="messagesbox">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages|dictsortreversed:"level" %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    <h1>{{ message }}</h1>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+{% if user.is_authenticated and user.role == 'PATIENT' %}
+    <div class="container mt-4" id="body">
+        <h1 class="page-title">Patient Dashboard</h1>
+        <p class="text-muted text-center">Welcome, {{ user.first_name|default:user.username }}</p>
+
+        <hr class="hr-gold">
+
+        <!-- Dashboard Cards (2 per row) -->
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="dashboard-card">
+                    <i class="fas fa-tint text-danger"></i>
+                    <h5>Request Blood</h5>
+                    <p>Book or manage requests</p>
+                    <a href="{% url 'patients:search-donors' %}" class="btn btn-outline-danger">Check</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="dashboard-card">
+                    <i class="fas fa-clipboard-check text-success"></i>
+                    <h5>View Requests</h5>
+                    <p>Track your request status</p>
+                    <a href="{% url 'patients:patient-requests' %}" class="btn btn-outline-success">Check</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="dashboard-card">
+                    <i class="fas fa-user text-primary"></i>
+                    <h5>My Profile</h5>
+                    <p>Update your details</p>
+                    <a href="{% url 'accounts:profile' %}" class="btn btn-outline-primary">View</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="dashboard-card">
+                    <i class="fas fa-calendar-check text-warning"></i>
+                    <h5>Notifications</h5>
+                    <p>See alerts & reminders</p>
+                    <a href="{% url 'patients:notifications' %}" class="btn btn-outline-warning">Check</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="row mt-4">
+            <div class="col-md-6 mb-3">
+                <div class="quick-stats-card">
+                    <h5><i class="fas fa-notes-medical me-2 text-warning"></i> Last Request</h5>
+                    {% if user.patientprofile.last_request_date %}
+                        <p class="text-soft">📅 {{ user.patientprofile.last_request_date|date:"d M Y" }}</p>
+                    {% else %}
+                        <span class="badge badge-soft rounded-pill">No request submitted yet</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="quick-stats-card">
+                    <h5><i class="fas fa-bell me-2 text-warning"></i> Notifications</h5>
+                    {% if user.notifications.count > 0 %}
+                        <p class="text-soft">🔔 You have {{ user.notifications.count }} new notifications.</p>
+                    {% else %}
+                        <span class="badge badge-soft rounded-pill">All caught up</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+  <div class="container mt-5 text-center">
+    <h1 class="text-danger">⚠️ Login as Patient</h1>
+    </div>
+{% endif %}
+{% endblock %}
+

@@ -1,0 +1,84 @@
+/* ✅ Hide Scrollbars Globally but Keep Scrolling */
+html, body {
+    overflow-x: hidden;       /* prevent horizontal scroll */
+    overflow-y: scroll;       /* keep vertical scrolling */
+    scrollbar-width: none;    /* Firefox */
+    -ms-overflow-style: none; /* IE & Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari */
+}
+
+/* ✅ Page Layout */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: #f8f9fa; /* soft gray */
+    color: #333;
+}
+
+/* ✅ Heading */
+h2 {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #b30000; /* dark red */
+}
+
+/* ✅ Card Styling */
+.card {
+    max-width: 500px;
+    margin: 30px auto;
+    border-radius: 15px;
+    border: none;
+    background: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease-in-out;
+    margin-bottom: 50px;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+/* ✅ Form Labels */
+.form-label {
+    font-weight: 800;
+    font-size: 1rem;
+    color: black;
+}
+
+/* ✅ Form Inputs */
+.card select,
+.card input {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    transition: all 0.3s;
+}
+
+.card select:focus,
+.card input:focus {
+    border-color: #b30000;
+    box-shadow: 0 0 6px rgba(179, 0, 0, 0.3);
+    outline: none;
+}
+
+/* ✅ Submit Button */
+.btn-danger {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #b30000, #ff4d4d);
+    border: none;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(90deg, #990000, #e60000);
+    transform: translateY(-2px);
+}

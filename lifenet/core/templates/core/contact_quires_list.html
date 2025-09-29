@@ -1,0 +1,61 @@
+{% extends base_template%}
+{%load static%}
+
+{%block extra_css%}
+<link rel="stylesheet" href="{%static 'css/contactuslist.css'%}">
+<link rel="stylesheet" href="{%static 'css/message.css'%}">
+{%endblock%}
+
+
+{% block content %}
+<div class="messagesbox">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages|dictsortreversed:"level" %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    <h1>{{ message }}</h1>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+<div class="table-container">
+    <h2>📩 Contact Queries</h2>
+    <table class="fancy-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Created At</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for query in queries %}
+            <tr>
+                <td>{{ query.firstname }} {{ query.lastname }}</td>
+                <td>{{ query.email }}</td>
+                <td>{{ query.subject }}</td>
+                <td>{{ query.message}}</td>
+                <td>{{ query.created_at }}</td>
+                <td>
+                    <form method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="query_id" value="{{ query.id }}">
+                        <select name="is_resolved" onchange="this.form.submit()">
+                            <option value="Pending" {% if query.is_resolved == 'Pending' %}selected{% endif %}>⏳ Pending</option>
+                            <option value="Resolved" {% if query.is_resolved == 'Resolved' %}selected{% endif %}>✅ Resolved</option>
+                        </select>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7">No queries yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

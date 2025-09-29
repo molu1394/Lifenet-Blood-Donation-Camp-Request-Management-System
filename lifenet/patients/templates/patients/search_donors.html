@@ -1,0 +1,70 @@
+{% extends base_template %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/bloodrequest.css' %}">
+
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated and user.role == 'PATIENT' %}
+    <div class="request-page">
+        <div class="switch-buttons">
+            <a href="{% url 'patients:search-donors' %}">Search Donors</a>
+            <a href="{% url 'patients:search-bloodbanks' %}" class="active">Search Blood Banks</a>
+        </div>
+        <h2>Available Donors</h2>
+
+        <form method="get" class="form-inline mb-3">
+            {{ form.location }}
+            {{ form.blood_group }}
+            <button type="submit">Search</button>
+        </form>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Blood Group</th>
+                    <th>Gender</th>
+                    <th>Location</th>
+                    <th>Mobile</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for donor in donors %}
+                <tr>
+                    <td>{{ donor.first_name }} {{ donor.last_name }}</td>
+                    <td>{{ donor.blood_group }}</td>
+                    <td>{{ donor.gender }}</td>
+                    <td>{{ donor.address }}</td>
+                    <td>{{ donor.mobile_number }}</td>
+                    <td>
+                        {% if user.is_authenticated and user.role == 'PATIENT' %}
+                            <form method="post" action="{% url 'patients:send-request' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="donor_id" value="{{ donor.id }}">
+                                <input type="hidden" name="blood_group" value="{{ donor.blood_group }}">
+                                <button type="submit">Request</button>
+                            </form>
+                        {%else%}
+                            <button class="btn btn-primary"><a href="{% url 'accounts:login' role='patient' %}">Login</a></button>
+                        {%endif%}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No donors found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+  <div class="container mt-5 text-center">
+    <h1 class="text-danger">⚠️ Login as Patient</h1>
+    </div>
+{% endif %}
+
+{% endblock %}

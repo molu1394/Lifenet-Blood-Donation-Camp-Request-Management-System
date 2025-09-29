@@ -1,0 +1,272 @@
+:root {
+    --primary-color: #8B0000;
+    /* Dark Red */
+    --secondary-color: #5C0000;
+    /* Deep Dark Red */
+    --accent-color: #FFD700;
+    /* Gold */
+    --light-bg: #FDF6F6;
+    /* Very Light Pink */
+    --text-color: #fff;
+    --footer-bg: #3a0000;
+    --btn-hover: #cc0000;
+    --shadow-glow: 0 0 8px #FFD700, 0 0 20px #FFB700;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html,body{
+    overflow-x: hidden;
+    box-sizing: border-box;
+    overflow-x: hidden;   /* already in your code */
+    overflow-y: scroll;   /* ensures scrolling works */
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari */
+}
+
+.maincontainer {
+    background: var(--light-bg);
+    font-family: 'Poppins', Arial, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    color: #3a0000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    scroll-behavior: smooth;
+}
+
+.signup-card {
+    background: #fff;
+    padding: 20px 32px 20px;
+    border-radius: 22px;
+    box-shadow: 0 8px 44px rgba(139, 0, 0, 0.18), 0 1px 40px #ffd70044;
+    min-width: 600px;
+    animation: fadeIn 0.47s cubic-bezier(.3, 1.5, .7, 1.09);
+    position: relative;
+    z-index: 1;
+    margin: 36px 0;
+}
+
+.signup-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.icons{
+  width:75px;
+  height: 75px;
+  vertical-align: middle;
+}
+
+.signup-header h4 {
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-top: 8px;
+    margin-bottom: 0;
+    letter-spacing: 1px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--secondary-color);
+    font-size: 0.97rem;
+}
+
+.form-control {
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 1.04rem;
+    border: 1.6px solid #ece3c5;
+    background: #fff;
+    color: #3a0000;
+    box-shadow: none;
+    outline: none;
+    transition: border 0.22s, box-shadow 0.22s;
+}
+
+.form-control:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 8px #FFD70077;
+    background: #fdf9e6;
+}
+
+.btn-signup {
+    background: linear-gradient(45deg, var(--accent-color), #ffb700);
+    color: var(--secondary-color);
+    font-weight: bold;
+    border-radius: 22px;
+    padding: 11px 0;
+    font-size: 1.08rem;
+    border: none;
+    box-shadow: var(--shadow-glow);
+    letter-spacing: 0.09em;
+    transition: background 0.29s, color 0.27s, box-shadow 0.28s, transform 0.18s;
+}
+
+.btn-signup:hover,
+.btn-signup:focus {
+    background: linear-gradient(45deg, #ccac00, #e6c200);
+    color: var(--primary-color);
+    box-shadow: 0 0 20px #ffd700, 0 0 36px #ccac00;
+    outline: none;
+    transform: scale(1.05);
+}
+
+a {
+    color: var(--accent-color);
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: color 0.17s;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #e6c200;
+}
+
+.profile-preview {
+    display: block;
+    margin: 0 auto 10px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 0 10px #ffd70066;
+}
+
+.form-select.custom-dropdown {    
+  border-radius: 10px;             
+  padding: 10px 14px;
+  transition: all 0.3s ease;
+  background-color: #fff;
+}
+
+/* Hover effect on the select box */
+.form-select.custom-dropdown:hover {
+  border-color: #FFD700; /* Gold border on hover */
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
+}
+
+/* Options inside dropdown (limited styling due to browser restrictions) */
+.form-select.custom-dropdown option {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Works best in Firefox */
+.form-select.custom-dropdown option:hover {
+  background: #FFD700;
+  color: #5C0000;
+  font-weight: bold;
+}
+
+input[type="date"].form-control {
+ /* Default border */
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  background: #fff;
+  color: #3a0000;
+  transition: all 0.3s ease;
+}
+
+input[type="date"].form-control:hover{
+  border-color: #ccac00; /* Golden border on hover */
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+input[type="date"].form-control:focus{
+    border-color: #FFD700;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+    background: #fdf9e6;
+    outline: none;
+}
+
+input[type="date"].form-control::-webkit-calendar-picker-indicator {
+  filter: invert(25%) sepia(100%) saturate(600%) hue-rotate(-20deg); /* makes it golden/dark red */
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+input[type="date"].form-control::-webkit-calendar-picker-indicator:hover {
+  transform: scale(1.2);
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    margin-top: 5px;
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 26px;
+}
+
+.slider::before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #8B0000;
+    /* your primary color */
+}
+
+input:checked+.slider::before {
+    transform: translateX(24px);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .signup-card {
+        padding: 20px 8vw 15px;
+    }
+
+    .signup-header h4 {
+        font-size: 1.19rem;
+    }
+}

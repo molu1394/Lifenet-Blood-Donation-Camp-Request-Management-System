@@ -1,0 +1,80 @@
+{% extends base_template %}
+{%load static%}
+{%block extra_css%}
+<link rel="stylesheet" href="{%static 'css/donor_requests.css' %}">
+<link rel="stylesheet" href="{%static 'css/message.css'%}">
+{%endblock%}
+{% block content %}
+<div class="messagesbox">
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages|dictsortreversed:"level" %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+            <h1>{{ message }}</h1>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<div id="request-list" class="container">
+{% if user.is_authenticated and user.role == 'DONOR' %}
+<div class="switch-buttons">
+    <a href="{% url 'donors:donor_requests' %}">Blood Requests</a>
+    <a href="{% url 'patients:request_list' %}" class="active">General Blood Requests</a>
+</div>
+<h2 class="mb-4">All Blood Requests</h2>
+{%else%}
+<h2 class="mb-4">All Blood Requests</h2>
+{%endif%}
+
+    <table class="fancy-table">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Blood Group</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Donor</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for req in requests %}
+            <tr>
+                <td>{{ req.patient_name }}</td>
+                <td>{{ req.blood_group }}</td>
+                <td>{{ req.location }}</td>
+                <td>{{ req.date_requested|date:"d M Y, H:i" }}</td>
+                <td>
+                    {% if req.donor_name %}
+                    ✅ {{ req.donor_name }}
+                    {% else %}
+                    ❌ Not Accepted
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not req.accepted_by %}
+                    {% if user.is_authenticated and user.donorprofile %}
+                    <form method="post" action="{% url 'patients:accept_request' req.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="accept">Donate</button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'accounts:login' role='donor' %}?next={% url 'patients:accept_request' req.id %}"
+                        class="accept">Donate</a>
+                    {% endif %}
+                    {% else %}
+                    <span class="text-muted">Already Accepted</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No requests yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

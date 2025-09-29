@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeNet</title>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" style="height:50px,width:auto;">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    {%block extra_css%}{%endblock%}
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <a href="{% url 'homepage' %}">Lifenet</a>
+            <i class="fas fa-bars toggle-btn" id="toggleSidebar"></i>
+        </div>
+        <ul class="nav">
+            <li class="nav-item active">
+                <a href="{%url 'donors:donor-dashboard' %}"><i class="fas fa-home"></i><span>Dashboard</span></a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'donors:donor_requests' %}" class="toggle-collapse">
+                    <i class="fas fa-tint"></i><span>Blood Requests</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="toggle-collapse">
+                    <i class="fas fa-hospital"></i><span>Camps</span>
+                    <span class="caret"><i class="fas fa-chevron-right"></i></span>
+                </a>
+                <ul class="nav-collapse">
+                    <li><a href="{% url 'camp:donor_upcoming_camp' %}"><span>Upcoming Camp</span></a></li>
+                    <li><a href="{% url 'camp:donor_registered_camp' %}"><span>Your Camp</span></a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="{%url 'accounts:profile' %}" class="toggle-collapse">
+                    <i class="fas fa fa-user"></i><span>Profile</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <form method="post" action="{% url 'accounts:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-simple"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+
+        // Only collapse submenu if it has a nested <ul>
+        document.querySelectorAll('.toggle-collapse').forEach(el => {
+            el.addEventListener('click', e => {
+                const submenu = el.parentElement.querySelector('.nav-collapse');
+                if (submenu) {
+                    e.preventDefault(); // prevent only if submenu exists
+                    el.parentElement.classList.toggle('open');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

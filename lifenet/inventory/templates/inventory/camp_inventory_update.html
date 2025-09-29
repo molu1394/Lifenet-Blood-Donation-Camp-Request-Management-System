@@ -1,0 +1,41 @@
+{% extends base_template %}
+{%load static%}
+
+{%block extra_css%}
+<link rel="stylesheet" href="{%static 'css/inventory_list.css'%}">
+{%endblock%}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    {% if user.role == "BLOODBANK" or user.role == "STAFF" or user.role == "ORG" %}
+      <h2>Update Inventory for {{ camp.name }}</h2>
+      <form method="post">
+        {% csrf_token %}
+        <table class="table table-bordered">
+          <tr>
+            <th>Blood Group</th>
+            <th>Units Collected</th>
+          </tr>
+          {% for inv in inventory %}
+          <tr>
+            <td>{{ inv.blood_group }}</td>
+            <td>
+              <input type="number" name="units_{{ inv.id }}" value="{{ inv.units_collected }}" min="0">
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+        <button type="submit" class="btn btn-primary">Update Stock</button>
+      </form>
+    {% else %}
+        <div class="container mt-5 text-center">
+            <h1 class="text-danger">⚠️ Login as BLOODBANK, ORG, or STAFF</h1>
+        </div>
+    {% endif %}
+{% else %}
+    <div class="container mt-5 text-center">
+        <h1 class="text-danger">⚠️ Login as BLOODBANK, ORG, or STAFF</h1>
+    </div>
+{% endif %}
+{% endblock %}
+

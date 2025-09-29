@@ -1,0 +1,255 @@
+:root {
+    --primary-color: #8B0000;
+    --secondary-color: #5C0000;
+    --accent-color: #FFD700;
+    --text-color: #fff;
+    --shadow-glow: 0 0 8px #ceb218b9, 0 0 20px #FFB700;
+}
+html,body{
+    overflow-x: scroll;   /* already in your code */
+    overflow-y: scroll;   /* ensures scrolling works */
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; 
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari */
+}
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    background: #FDF6F6;
+}
+
+.sidebar {
+    width: 240px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    height: 100vh;
+    position: fixed;
+    transition: width 0.3s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.sidebar.collapsed {
+    width: 70px;
+    text-align: center;
+}
+
+.sidebar-logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--secondary-color);
+    font-weight: bold;
+    position: relative;
+    text-shadow: var(--shadow-glow);
+}
+
+.sidebar-logo a {
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    text-decoration: none;
+    font-weight: 700;
+    transition: opacity 0.3s;
+}
+
+.sidebar.collapsed .sidebar-logo a {
+    opacity: 0;
+}
+
+.toggle-btn {
+    cursor: pointer;
+    color: var(--accent-color);
+    font-size: 1.8rem;
+    position: relative;
+    background: var(--primary-color);
+    border-radius: 50%;
+    padding: 6px;
+    box-shadow: var(--shadow-glow);
+    z-index: 1001;
+}
+
+.nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-item a,
+.nav-item button {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 12px 20px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+    font-weight: 600;
+}
+
+.nav-item a i,
+.nav-item button i {
+    margin-right: 12px;
+    min-width: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.nav-item a span {
+    transition: opacity 0.3s;
+}
+
+.nav-item button span {
+    transition: opacity 0.3s;
+}
+
+.sidebar.collapsed .nav-item a span {
+    display: none;
+}
+
+.sidebar.collapsed .nav-item button span {
+    display: none;
+}
+
+.sidebar.collapsed .nav-item a,
+.sidebar.collapsed .nav-item button {
+    justify-content: center;
+}
+
+.nav-item a:hover,
+.nav-item button:hover {
+    background-color: var(--secondary-color);
+    color: var(--accent-color);
+    box-shadow: var(--shadow-glow);
+}
+
+.nav-collapse {
+    list-style: none;
+    padding-left: 20px;
+    display: none;
+}
+
+.nav-item.open .nav-collapse {
+    display: block;
+}
+
+.nav-collapse li a {
+    padding: 10px 20px;
+    display: block;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.nav-collapse li a:hover {
+    background-color: var(--secondary-color);
+    color: var(--accent-color);
+}
+
+.caret {
+    margin-left: auto;
+    transition: transform 0.3s;
+}
+
+.nav-item.open .caret {
+    transform: rotate(90deg);
+}
+
+.btn-simple {
+    width: 50px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    text-align: center;
+    padding: 12px 0;
+    cursor: pointer;
+    font-size: 1.4rem;
+    font-weight: 700;
+    transition: background 0.3s, color 0.3s;
+    margin-top: auto;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.btn-simple i {
+    display: block;
+}
+
+.btn-simple:hover {
+    background-color: var(--secondary-color);
+    color: var(--accent-color);
+    box-shadow: var(--shadow-glow);
+}
+
+.main-content {
+    margin-left: 240px;
+    padding: 20px;
+    flex: 1;
+    transition: margin-left 0.3s;
+}
+
+.sidebar.collapsed~.main-content {
+    margin-left: 70px;
+}
+
+.sidebar.collapsed .toggle-btn {
+    position: absolute;
+    justify-content: center;
+    align-self: center;
+    left: 16px;
+    top: 16px;
+    z-index: 1001;
+}
+
+/* For mobile devices (screen ≤ 768px) */
+@media (max-width: 750px) {
+    .sidebar {
+        width: 70px !important;
+        /* collapsed width */
+        left: 0 !important;
+        /* prevent hiding */
+        position: fixed;
+        height: 100%;
+    }
+
+    .main-content {
+        margin-left: 70px !important;
+    }
+
+    /* Hide logo text */
+    .sidebar-logo a {
+        opacity: 0;
+    }
+
+    /* Hide link text */
+    .nav-item a span,
+    .nav-item button span {
+        display: none;
+    }
+
+    /* Center icons */
+    .nav-item a,
+    .nav-item button {
+        justify-content: center;
+    }
+
+    /* Toggle stays top-left */
+    .toggle-btn {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 1100;
+    }
+}
+
